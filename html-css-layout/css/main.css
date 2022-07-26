@@ -7,7 +7,7 @@
     padding: 0%;
     margin: 0%;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    /* background-color: #F19C79; */
+    
   }
 header{
     background-color:#F19C79;
@@ -31,7 +31,7 @@ header{
 }
 
 .topnav a:hover{
-    background-color: #D7CE33 ;
+  background-color: #D7CE33 ;
 }
 aside{
   float: right;
@@ -48,8 +48,10 @@ aside img{
 
 }
 
-
-  #post{
+#main{
+  background-color: #F19C79;
+}
+  #posts{
     background-color: #CBDFBD;
     padding: 30px;
     overflow: hidden;
