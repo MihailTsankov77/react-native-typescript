@@ -1,0 +1,8 @@
+{
+  "name": "blogpost-float",
+  "version": "1.0.0",
+  "description": "blog post",
+  "main": "index.js",
+  "author": "Mihail Tsankov",
+  "license": "MIT"
+}
