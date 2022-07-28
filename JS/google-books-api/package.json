@@ -1,0 +1,14 @@
+{
+  "name": "google-books-api",
+  "version": "1.0.0",
+  "description": "google books api",
+  "main": "index.js",
+  "author": "Mihail Tsankov",
+  "license": "Apache 2.0",
+  "scripts": {
+    "start": "lite-server"
+  },
+  "devDependencies": {
+    "lite-server": "^2.6.1"
+  }
+}
