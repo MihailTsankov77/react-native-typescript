@@ -1,12 +1,12 @@
-GET   http://localhost:3000/posts HTTP/1.1
+GET   http://localhost:3000/api/posts HTTP/1.1
 
 ###
 
-GET   http://localhost:3000/posts/1 HTTP/1.1
+GET   http://localhost:3000/api/posts/1 HTTP/1.1
 
 ###
 
-POST http://localhost:3000/posts HTTP/1.1
+POST http://localhost:3000/api/posts HTTP/1.1
 content-type: application/json
 
 {
@@ -22,7 +22,7 @@ content-type: application/json
   }
 
 ###
-PUT http://localhost:3000/posts/3 HTTP/1.1
+PUT http://localhost:3000/api/posts/3 HTTP/1.1
 content-type: application/json
 
 {
@@ -41,4 +41,4 @@ content-type: application/json
   }
 
 ###
-DELETE http://localhost:3000/posts/3 HTTP/1.1
+DELETE http://localhost:3000/api/posts/3 HTTP/1.1

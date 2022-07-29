@@ -6,9 +6,13 @@
   "author": "Mihail Tsankov",
   "license": "Apache 2.0",
   "scripts": {
+    "api": "json-server db.json",
     "start": "lite-server"
   },
   "devDependencies": {
     "lite-server": "^2.6.1"
+  },
+  "dependencies": {
+    "json-server": "^0.17.0"
   }
 }

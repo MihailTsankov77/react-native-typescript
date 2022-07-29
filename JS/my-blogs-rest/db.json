@@ -47,6 +47,30 @@
       "imageUrl": "https://19yw4b240vb03ws8qm25h366-wpengine.netdna-ssl.com/wp-content/uploads/Web-Service-What-is-REST-API-And-How-Does-it-Work-1024x576.png",
       "authorId": 1,
       "id": 5
+    },
+    {
+      "title": "Using rest client",
+      "content": "rest client is easy...",
+      "tags": [
+        "rest-client",
+        "rest",
+        "http"
+      ],
+      "imageUrl": "https://19yw4b240vb03ws8qm25h366-wpengine.netdna-ssl.com/wp-content/uploads/Web-Service-What-is-REST-API-And-How-Does-it-Work-1024x576.png",
+      "authorId": 1,
+      "id": 6
+    },
+    {
+      "title": "Using rest clients",
+      "content": "rest client is easy...",
+      "tags": [
+        "rest-client",
+        "rest",
+        "http"
+      ],
+      "imageUrl": "https://19yw4b240vb03ws8qm25h366-wpengine.netdna-ssl.com/wp-content/uploads/Web-Service-What-is-REST-API-And-How-Does-it-Work-1024x576.png",
+      "authorId": 1,
+      "id": 7
     }
   ],
   "comments": [

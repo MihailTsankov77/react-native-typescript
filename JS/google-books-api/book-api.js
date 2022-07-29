@@ -19,7 +19,17 @@ async function showBooks() {
         
     }catch (err){
         console.log(`Error:` ,err)
+    }finally{
+
+        const favBtns = document.getElementsByClassName("favBtnHolder");
+        for( btn of favBtns){
+            btn.addEventListener("click", ()=>{
+                console.log(btn);
+                btn.innerHTML=`<img src="img/heart.webp">`;//?????
+            });
+        }
     }
+
 }
 showBooks();
 
@@ -27,31 +37,40 @@ showBooks();
 function innerHtmlCode(book) { 
     const summ = shortText(book.volumeInfo.description, 400, "<span class=\"hide\"> ...</span>");
     return `<article class="article">
-        <div class="title">
-            <h3>${book.volumeInfo.title}</h3>
-            <h4 class="author">${(book.volumeInfo.authors==undefined)? "" : book.volumeInfo.authors}</h4>
-        </div>
-        
-        <img src="${(book.volumeInfo.imageLinks==undefined)? "" : book.volumeInfo.imageLinks.thumbnail}"></img>
-            <summary class="summary">
-                ${summ.short}
-                <span class=\"fullSummary\">${summ.fullText}</span>
-            </summary>
-            
-        </article>
+                <div class="title">
+                    <h3 title="${book.volumeInfo.title}">${shortText( book.volumeInfo.title, 30, "...").short}</h3>
+                    <div id="rightPart">
+                        <div class="artNavbar"><div class="favBtnHolder"><img src="img/heart.webp" class="favBtn"></div></div>
+                        <h4 class="author">${(book.volumeInfo.authors==undefined)? "" : book.volumeInfo.authors}</h4>
+                    </div>
+                </div>
+                
+                <img src="${(book.volumeInfo.imageLinks==undefined)? "" : book.volumeInfo.imageLinks.thumbnail}"></img>
+
+                <summary class="summary">
+                    <span>${summ.short}</span>
+                    <span class=\"fullSummary\">${summ.fullText}</span>
+                </summary>
+                    
+            </article>
         `
 }
 
-function shortText(text="description..", symbols, end){
+function shortText(text="description...", symbols, end){
     let substring = text.substring(0, symbols);
+    if(text.length < symbols){
+        return {
+            short: (substring=="") ? "No description." :substring,
+            fullText: ''
+        }
+    }
     let i;
     for(i=substring.length-1; i>0;i--) {
         if (substring[i] == " ") break;
     }
     substring = substring.substring(0,i);
-    end = (text.length < symbols)? "" : end;
     return {
-        short: (substring=="") ? "No description." :substring + end,
+        short: substring + end,
         fullText: text.replace(substring, '')
     }
 }
@@ -61,7 +80,11 @@ function init(){
     form.addEventListener("submit", () =>{
         event.preventDefault();
         showBooks(); 
+        
     } );
+
+    
+
    
 }
 

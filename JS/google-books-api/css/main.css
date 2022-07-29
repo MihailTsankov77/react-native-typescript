@@ -86,9 +86,6 @@ article{
     box-shadow: 5px 10px #888888;
 }
 
-/* article:hover{
-    background-color: #D4E09B;
-} */
 
 .summary {
     width: fit-content;
@@ -120,29 +117,58 @@ article:hover .summary{
     flex: 100%;
     display: flex;
     flex-flow: row wrap;
-    justify-content: flex-start;
 }
 
 .title h3{
-    flex: 100%;
+    flex: 40%;
     font-size:  25px;
     padding: 0px;
     height: 25px;
     text-align: left;
 }
 
+article .title .rightPart{
+    flex: 40%;
+    display: flex;
+    flex-flow: row wrap;
+
+}
+.artNavbar{
+    flex: 100%;
+    height: 40px;
+    display: flex;
+    flex-flow: row;
+    flex-direction: row-reverse;
+}
+
+.artNavbar .favBtn{
+    height: 100%;
+    width: auto;
+    opacity: 0%;
+}
+
+article:hover .artNavbar .favBtn:not(.favBtn:hover){
+    opacity: 30%;
+}
+
+.favBtn:hover{
+    opacity: 100%;
+}
+
 .author{
     flex: 100%;
     text-align: right;
     font-size: 10px;
+    align-self: flex-end;
     color: grey;
 }
+
 
 
 article>img{
     flex: 20%;
     width: 33%;
-    height: auto;
+    height: max-content;
     margin: 2%;
     padding: 0%;
     border-radius: 15%;
@@ -153,8 +179,9 @@ article>summary{
     flex: 50%;
     text-align: left;
     margin-left: 10px;
-    max-height: 300px;
+    max-height: 200px;
     overflow:scroll;
+    
     
 }
 
