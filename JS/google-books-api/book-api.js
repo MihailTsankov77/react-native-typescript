@@ -8,6 +8,7 @@ async function showBooks() {
         input.value="";
         
         const resp = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(booksName)}&maxResults=9`);
+        
         const googleBooks = Object.values(await resp.json())[2];
         posts.innerHTML="";
         googleBooks.forEach(gBook => {
@@ -24,16 +25,19 @@ showBooks();
 
 
 function innerHtmlCode(book) { 
+    const summ = shortText(book.volumeInfo.description, 400, "<span class=\"hide\"> ...</span>");
     return `<article class="article">
         <div class="title">
-            <h3>${shortText(book.volumeInfo.title, 60, " ...")}</h3>
+            <h3>${book.volumeInfo.title}</h3>
             <h4 class="author">${(book.volumeInfo.authors==undefined)? "" : book.volumeInfo.authors}</h4>
         </div>
         
-        <img src="${book.volumeInfo.imageLinks.thumbnail}"></img>
-            <summary>
-                ${shortText(book.volumeInfo.description, 350, "<span class=\"expand\"> ...</span>")}
+        <img src="${(book.volumeInfo.imageLinks==undefined)? "" : book.volumeInfo.imageLinks.thumbnail}"></img>
+            <summary class="summary">
+                ${summ.short}
+                <span class=\"fullSummary\">${summ.fullText}</span>
             </summary>
+            
         </article>
         `
 }
@@ -46,7 +50,10 @@ function shortText(text="description..", symbols, end){
     }
     substring = substring.substring(0,i);
     end = (text.length < symbols)? "" : end;
-    return (substring=="") ? "No description." :substring + end;
+    return {
+        short: (substring=="") ? "No description." :substring + end,
+        fullText: text.replace(substring, '')
+    }
 }
 
 function init(){

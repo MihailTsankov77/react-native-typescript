@@ -76,8 +76,9 @@ article{
     border-radius: 10%;
     text-align: center;
     background-color: white;
-    overflow:hidden;
-    max-width: 30%;
+    max-width: 550px;
+    max-height: 400px;
+    overflow: hidden;
     min-width: 30%;
     display: flex;
     flex-flow: row wrap;
@@ -89,13 +90,30 @@ article{
     background-color: #D4E09B;
 } */
 
-.expand {
+.summary {
     width: fit-content;
+    height: fit-content;
+    max-height: 250px;
     margin-left: 5px;
+    overflow: scroll;
+    border-radius: 5px;
+}
+article:hover .summary{
+    
+    box-shadow: 5px 5px 5px 5px #ced0ce;
 }
 
-article:hover .expand{
-    box-shadow: 5px 5px 5px 5px #888888;
+
+
+
+.fullSummary{
+    display: none;
+}
+ .summary:hover .hide{
+    display: none;
+}
+.summary:hover .fullSummary{
+    display: flex;
 }
 
 .title{

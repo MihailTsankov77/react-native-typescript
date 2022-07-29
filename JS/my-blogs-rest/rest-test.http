@@ -1,0 +1,44 @@
+GET   http://localhost:3000/posts HTTP/1.1
+
+###
+
+GET   http://localhost:3000/posts/1 HTTP/1.1
+
+###
+
+POST http://localhost:3000/posts HTTP/1.1
+content-type: application/json
+
+{
+    "title": "Using rest client",
+    "content": "rest client is easy...",
+    "tags": [
+      "rest-client",
+      "rest",
+      "http"
+    ],
+    "imageUrl": "https://19yw4b240vb03ws8qm25h366-wpengine.netdna-ssl.com/wp-content/uploads/Web-Service-What-is-REST-API-And-How-Does-it-Work-1024x576.png",
+    "authorId": 1
+  }
+
+###
+PUT http://localhost:3000/posts/3 HTTP/1.1
+content-type: application/json
+
+{
+    "id":3,
+    "title": "Rest client",
+    "content": "Rest Client is easy???",
+    "tags": [
+      "rest-client",
+      "rest",
+      "http",
+      "easy"
+
+    ],
+    "imageUrl": "https://19yw4b240vb03ws8qm25h366-wpengine.netdna-ssl.com/wp-content/uploads/Web-Service-What-is-REST-API-And-How-Does-it-Work-1024x576.png",
+    "authorId": 1
+  }
+
+###
+DELETE http://localhost:3000/posts/3 HTTP/1.1

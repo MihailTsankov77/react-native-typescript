@@ -1,4 +1,6 @@
 
+import { User } from './user.js';
+
 async function init() {
     try{
         const resultsElem = document.getElementById('results');
@@ -7,21 +9,26 @@ async function init() {
         const gitUsers = await Promise.all(
                             users.map( async user=>{
                                 const gitResp= await fetch(`https://api.github.com/users/${user.username}`)
-                                return gitResp.json();
+                                const gu =  await gitResp.json();
+                                return new User (gu.login, gu.name, gu.avatar_url, gu.public_repos, gu.public_gists, gu.followers);
                             })
                         )    
             
         
-        const images = gitUsers.map(gitUser =>{
-            const img = new Image();
-            img.src = gitUser.avatar_url;
-            resultsElem.insertAdjacentElement('beforeend', img);
-            return img;       
+        const elems = gitUsers.map(gitUser =>{
+            const userDiv = document.createElement('div');
+            userDiv.innerHTML = `
+                <figure>
+                    <img src = ${gitUser.pictureUrl} >
+                    <figcaption>${gitUser.username} -  ${gitUser.name}</figcaption>
+                </figure>
+            `
+
+            resultsElem.insertAdjacentElement('beforeend', userDiv);
+            return userDiv;       
         });
 
-        await new Promise((resolve, reject) => setTimeout(resolve, 10000));
-        
-        images.forEach(img => resultsElem.removeChild(img));
+      
 
     }catch (err){
         console.log(`Error:` ,err)

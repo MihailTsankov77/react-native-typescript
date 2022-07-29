@@ -1,0 +1,66 @@
+{
+  "posts": [
+    {
+      "id": 1,
+      "title": "json-server",
+      "content": "json-server is easy...",
+      "tags": [
+        "json-server",
+        "rest",
+        "api"
+      ],
+      "imageUrl": "https://dzone.com/articles/zero-code-rest-with-json-server.png",
+      "authorId": 1
+    },
+    {
+      "id": 2,
+      "title": "ES\\6",
+      "content": "ea6 is very neat...",
+      "tags": [
+        "javascript",
+        "es6",
+        "class"
+      ],
+      "imageUrl": "https://www.kindacode.com/article/simple-promise-chain-example-in-modern-javascript/",
+      "authorId": 1
+    },
+    {
+      "title": "Using rest client",
+      "content": "rest client is easy...",
+      "tags": [
+        "rest-client",
+        "rest",
+        "http"
+      ],
+      "imageUrl": "https://19yw4b240vb03ws8qm25h366-wpengine.netdna-ssl.com/wp-content/uploads/Web-Service-What-is-REST-API-And-How-Does-it-Work-1024x576.png",
+      "authorId": 1,
+      "id": 4
+    },
+    {
+      "title": "Using rest client",
+      "content": "rest client is easy...",
+      "tags": [
+        "rest-client",
+        "rest",
+        "http"
+      ],
+      "imageUrl": "https://19yw4b240vb03ws8qm25h366-wpengine.netdna-ssl.com/wp-content/uploads/Web-Service-What-is-REST-API-And-How-Does-it-Work-1024x576.png",
+      "authorId": 1,
+      "id": 5
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "body": "some comment",
+      "postId": 1
+    }
+  ],
+  "users": {
+    "id": 1,
+    "firstname": "John",
+    "lastName": "Smith",
+    "password": "john123",
+    "role": "ADMIN"
+  }
+}

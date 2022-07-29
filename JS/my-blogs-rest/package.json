@@ -1,0 +1,16 @@
+{
+  "name": "my-blogs-rest",
+  "version": "1.0.0",
+  "description": "Rest, Https, json-server with ES\\6+ web client demo",
+  "main": "index.js",
+  "author": "Mihail Tsankov",
+  "license": "Apache-2.0",
+  "scripts": {
+    "api": "json-server db.json",
+    "start": "lite-server"
+  },
+  "devDependencies": {
+    "json-server": "^0.17.0",
+    "lite-server": "^2.6.1"
+  }
+}
