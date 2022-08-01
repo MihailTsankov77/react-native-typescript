@@ -6,7 +6,7 @@
   "author": "Mihail Tsankov",
   "license": "Apache 2.0",
   "scripts": {
-    "api": "json-server db.json",
+    "api": "json-server db.json --routes routes.json",
     "start": "lite-server"
   },
   "devDependencies": {

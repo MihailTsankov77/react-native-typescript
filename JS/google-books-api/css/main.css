@@ -144,15 +144,18 @@ article .title .rightPart{
 .artNavbar .favBtn{
     height: 100%;
     width: auto;
+}
+
+.artNavbar .hoverFavBtn{
     opacity: 0%;
 }
 
-article:hover .artNavbar .favBtn:not(.favBtn:hover){
+article:hover .artNavbar .hoverFavBtn:not(.hoverFavBtn:hover){
     opacity: 30%;
 }
 
-.favBtn:hover{
-    opacity: 100%;
+.hoverFavBtn:hover{
+    opacity: 60%;
 }
 
 .author{

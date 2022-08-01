@@ -1,3 +1,5 @@
+import { Book } from "./book.js";
+import { favoritesAdd, favoritesDel } from "./favorite.js";
 
 
 async function showBooks() {
@@ -12,40 +14,52 @@ async function showBooks() {
         const googleBooks = Object.values(await resp.json())[2];
         posts.innerHTML="";
         googleBooks.forEach(gBook => {
-            const innerHtml = innerHtmlCode(gBook);
+            const book = new Book(gBook.id, gBook.volumeInfo.title, gBook.volumeInfo.authors, gBook.volumeInfo.imageLinks.thumbnail, gBook.volumeInfo.description);
+            const innerHtml = innerHtmlCode(book);
+            
             posts.insertAdjacentHTML("beforeend", innerHtml)
-
+    addFavListener(book);
         });
         
     }catch (err){
         console.log(`Error:` ,err)
-    }finally{
-
-        const favBtns = document.getElementsByClassName("favBtnHolder");
-        for( btn of favBtns){
-            btn.addEventListener("click", ()=>{
-                console.log(btn);
-                btn.innerHTML=`<img src="img/heart.webp">`;//?????
-            });
-        }
     }
 
 }
 showBooks();
 
+function addFavListener(book){
+    const favBtnsCollection = document.getElementsByClassName("favBtnHolder");
+        const favBtns = [...favBtnsCollection];
+        const favBtn = favBtns[favBtns.length-1];
+        
+            favBtn.addEventListener("click", ()=>{
+                if(favBtn.childNodes[0].className.length>6){
+                    favBtn.innerHTML=`<img src="img/heart.webp" class="favBtn">`;
+                    
+                    favoritesAdd(book);
+                }else{
+                    favBtn.innerHTML =`<img src="img/heart.webp" class="favBtn hoverFavBtn">`;
+                    favoritesDel(book);
+                }
+                
+            })
+    
+}
+
 
 function innerHtmlCode(book) { 
-    const summ = shortText(book.volumeInfo.description, 400, "<span class=\"hide\"> ...</span>");
+    const summ = shortText(book.description, 400, "<span class=\"hide\"> ...</span>");
     return `<article class="article">
                 <div class="title">
-                    <h3 title="${book.volumeInfo.title}">${shortText( book.volumeInfo.title, 30, "...").short}</h3>
+                    <h3 title="${book.title}">${shortText( book.title, 30, "...").short}</h3>
                     <div id="rightPart">
-                        <div class="artNavbar"><div class="favBtnHolder"><img src="img/heart.webp" class="favBtn"></div></div>
-                        <h4 class="author">${(book.volumeInfo.authors==undefined)? "" : book.volumeInfo.authors}</h4>
+                        <div class="artNavbar"><div class="favBtnHolder"><img src="img/heart.webp" class="favBtn hoverFavBtn"></div></div>
+                        <h4 class="author">${(book.authors==undefined)? "" : book.authors}</h4>
                     </div>
                 </div>
                 
-                <img src="${(book.volumeInfo.imageLinks==undefined)? "" : book.volumeInfo.imageLinks.thumbnail}"></img>
+                <img src="${(book.imageUrl==undefined)? "" : book.imageUrl}"></img>
 
                 <summary class="summary">
                     <span>${summ.short}</span>
@@ -54,6 +68,7 @@ function innerHtmlCode(book) {
                     
             </article>
         `
+      
 }
 
 function shortText(text="description...", symbols, end){

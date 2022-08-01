@@ -41,4 +41,4 @@ content-type: application/json
   }
 
 ###
-DELETE http://localhost:3000/api/posts/3 HTTP/1.1
+DELETE http://localhost:4200/api/posts/10 HTTP/1.1
