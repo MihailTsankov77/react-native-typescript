@@ -4,10 +4,10 @@ import { addChipsForEdit, chipsEditInstances, chipsInstances } from "./materiali
 const postSection = document.getElementById('posts');
 const errorsDiv = document.getElementById('errors');
 const addPostForm = document.getElementById('add-blog-form');
-addPostForm.addEventListener('submit', handleSubmitPost);
+addPostForm.addEventListener('submit', handleSubmit);
 addPostForm.addEventListener('reset', resetForm);
 
-
+let saveChips;
 
 
 
@@ -33,14 +33,27 @@ export function addPost(post) {
     const postElem = document.createElement('article');
     postElem.setAttribute("id", post.id)
     postElem.className = "col s12 m6 l4";
-    postElem.innerHTML = `
+    
+    addInnerHtmlToPost(post, postElem);
+    
+    postSection.insertAdjacentElement('beforeend', postElem);
+}
+
+
+function changeToEditedPost(post, target){
+    addInnerHtmlToPost(post, target.parentElement.parentElement);
+    target.remove();
+}
+
+function addInnerHtmlToPost(post, article){
+    article.innerHTML = `
     <div class="card">
     <div class="card-image waves-effect waves-block waves-light">
       <img class="activator" src="${post.imageUrl}">
     </div>
     <div class="card-content">
       <span class="card-title activator grey-text text-darken-4">${post.title}<i class="material-icons right">more_vert</i></span>
-      <p><div class="post-metadata">Author: ${post.authorId}, Tags:${(post.tags) ? post.tags.join(', ') : 'no tags'}</div></p>
+      <p><div class="post-metadata">Author: ${post.authorId}, Tags: ${(post.tags) ? post.tags.join(', ') : 'no tags'}</div></p>
     </div>
     <div class="card-reveal">
       <span class="card-title grey-text text-darken-4">${post.title}<i class="material-icons right">close</i></span>
@@ -50,11 +63,17 @@ export function addPost(post) {
     <a class="waves-effect waves-light btn" id="delete"><i class="material-icons left">clear</i></a>
   </div>
     `
-    postSection.insertAdjacentElement('beforeend', postElem);
-    postElem.querySelector('#delete').addEventListener("click", () => delPost(post.id));
-    postElem.querySelector('#edit').addEventListener("click", () => editPost(post));
+    // showTags(post.tags);
+{/* <span id="showTags" class="chips">
+         <input  disabled  id="tags" name="tags" class="custom-class">
+        </span> */}
+
+
+    article.querySelector('#delete').addEventListener("click", () => delPost(post.id));
+    article.querySelector('#edit').addEventListener("click", () => editPost(post));
 
 }
+
 
 function delPost(postId) {
     const article = document.getElementById(postId);
@@ -65,14 +84,15 @@ function delPost(postId) {
 function editPost(post) {
     const article = document.getElementById(post.id);
     const card = article.querySelector(".card");
-    card.style.display = "none";
+    card.remove();
+    
     article.innerHTML = `
     <div class="row">
         <form id="edit-post-form" class="col s12">
         <div id="${post.id}"></div>
         <div class="row">
             <div class="input-field col s6">
-            <input  id="title" name="titlre" type="text" class="validate" value="${post.title}">
+            <input  id="title" name="title" type="text" class="validate" value="${post.title}">
         
             </div>
             <div class="input-field col s6">
@@ -96,96 +116,94 @@ function editPost(post) {
                 <input placeholder="Tags" id="tags" name="tags" class="custom-class">
             </div>
         </div>
-        <button class="btn waves-effect waves-light" type="submit" name="submit">Submit
-            <i class="material-icons right">send</i>
-        </button>
-        <button class="btn waves-effect waves-light red lighten-1" type="reset" >Reset
-            <i class="material-icons right">cached</i>
-        </button>       
-
+        <div class="btns">
+            <button class="btn waves-effect waves-light" type="submit" name="submit">Submit
+                <i class="material-icons right">send</i>
+            </button>
+            <button class="btn waves-effect waves-light red lighten-1" type="reset" >Reset
+                <i class="material-icons right">cached</i>
+            </button>   
+            <button class="btn waves-effect waves-light blue lighten-2" id="cancel" type="button" >cancal
+                <i class="material-icons right">cancel</i>
+            </button>    
+        </div>
         </form>
+
     </div>
     `
+    
     addChipsForEdit(post.tags);
-
+    
+    saveChips = [...chipsEditInstances[0].chipsData.map(chip => chip.tag)];
 
     const editPostForm = document.getElementById('edit-post-form');
-    editPostForm.addEventListener('submit', handleEditPost);
+    editPostForm.addEventListener('submit', handleSubmit);
+    editPostForm.addEventListener('reset', resetForm);
+    editPostForm.querySelector('#cancel').addEventListener('click', () => cancelForm(post.id));
 }
 
 
-async function handleSubmitPost(event) {
+async function handleSubmit(event) {
     try {
         event.preventDefault();
         const formData = new FormData(event.target);
-        const newPost = {}
+        const Post = {}
         for (const entry of formData.entries()) {
-            newPost[entry[0]] = entry[1];
+            Post[entry[0]] = entry[1];
         }
-        const tags = chipsInstances[0].chipsData.map(chip => chip.tag);
-        newPost['tags'] = tags;
 
-        const created = await addNewPosts(newPost);
-        addPost(newPost);
-        resetForm();
-    } catch (err) {
-        showError(err)
-    }
-}
-async function handleEditPost(event) {
-    try {
-        event.preventDefault();
-        const formData = new FormData(event.target);
-        const editPost = {}
-        for (const entry of formData.entries()) {
-            editPost[entry[0]] = entry[1];
+        if([...event.target.childNodes][1].id===""){
+            const tags = chipsInstances[0].chipsData.map(chip => chip.tag);
+            Post['tags'] = tags;
+            const created = await addNewPosts(Post);
+            addPost(created);
+            resetForm();
+        }else{
+            console.log(chipsEditInstances[0].chipsData)
+            const tags = chipsEditInstances[0].chipsData.map(chip => chip.tag);
+            Post['tags'] = tags;
+            Post['id'] = [...event.target.childNodes][1].id;
+            const created = await editPosts(Post);
+            changeToEditedPost(created, event.target);
         }
-        const tags = chipsEditInstances[0].chipsData.map(chip => chip.tag);
-        editPost['tags'] = tags;
-        editPost['id'] = [...event.target.childNodes][1].id;
-
-        const created = await editPosts(editPost);
-        changeToEditedPost(editPost, event.target);
-
-        resetForm();
+  
     } catch (err) {
         showError(err)
     }
 }
 
-function changeToEditedPost(post, target){
-    const article = target.parentElement.parentElement;
-    article.innerHTML = `
-    <div class="card">
-    <div class="card-image waves-effect waves-block waves-light">
-      <img class="activator" src="${post.imageUrl}">
-    </div>
-    <div class="card-content">
-      <span class="card-title activator grey-text text-darken-4">${post.title}<i class="material-icons right">more_vert</i></span>
-      <p><div class="post-metadata">Author: ${post.authorId}, Tags:${(post.tags) ? post.tags.join(', ') : 'no tags'}</div></p>
-    </div>
-    <div class="card-reveal">
-      <span class="card-title grey-text text-darken-4">${post.title}<i class="material-icons right">close</i></span>
-      <p>${post.content}</p>
-    </div>
-    <a class="waves-effect waves-light btn" id="edit"><i class="material-icons left">border_color</i></a>
-    <a class="waves-effect waves-light btn" id="delete"><i class="material-icons left">clear</i></a>
-  </div>
-    `
-    postElem.querySelector('#delete').addEventListener("click", () => delPost(post.id));
-    postElem.querySelector('#edit').addEventListener("click", () => editPost(post));
+function resetForm(event) {
+    event.target.reset();
+    if([...event.target.childNodes][1].id===""){
+        
+        const instance = chipsInstances[0];
+        while (instance.chipsData.length > 0) {
+            instance.deleteChip(0);
+        }
+    }else{
+        event.target.reset();
+        const instance = chipsEditInstances[0];
 
-    target.remove();
+        while (instance.chipsData.length > 0) {
+            instance.deleteChip(0);
+        }
+
+        saveChips.forEach(tag => {
+            chipsEditInstances[0].addChip({
+            tag: tag,  
+            })
+        });
+
+    }
+    
+    
 }
 
 
-function resetForm() {
-    addPostForm.reset();
-
-    const instance = chipsInstances[0];
-    while (instance.chipsData.length > 0) {
-        instance.deleteChip(0);
-    }
+function cancelForm(postId){
+    const article = document.getElementById(postId).childNodes;
+    article.remove()
+    console.log(article)
 }
 
 init();
