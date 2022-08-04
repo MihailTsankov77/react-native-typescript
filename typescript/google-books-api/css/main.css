@@ -1,0 +1,286 @@
+* {
+    box-sizing: border-box;
+    
+  }
+
+  body{
+    padding: 0%;
+    margin: 0%;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    
+  }
+header{
+    background-color:#F19C79;
+  padding: 30px;
+  text-align: center;
+  font-size: 35px;
+  color: white;
+}
+
+.topnav{
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    background-color: #F6F4D2;
+}
+.topnav div{
+    display: flex;
+    align-items: stretch;
+
+}
+.topnav a{
+    display: flex;
+    align-items: center;
+    text-align: center;
+    
+  padding: 14px 16px;
+  text-decoration: none;
+  color: black;
+}
+
+.topnav a:hover{
+    background-color: #D7CE33 ;
+}
+
+#main{
+    display: flex;
+    flex-flow: row wrap;
+}
+
+aside{
+    flex: 10%;
+    padding: 30px;
+    background-color: #F19C79;
+}
+
+
+#posts{
+    flex: 100%;
+    display: flex;
+    flex-flow: row wrap;
+    align-content: flex-start;
+    justify-content: space-evenly;
+    column-gap: 20px;
+    row-gap: 10px;
+    
+    background-color: #CBDFBD;
+    padding: 30px;
+    overflow: hidden;
+
+}
+
+article{
+    margin: 10px;
+    padding: 20px;
+    border-color: gray;
+    border-radius: 10%;
+    text-align: center;
+    background-color: white;
+    max-width: 550px;
+    max-height: 400px;
+    overflow: hidden;
+    min-width: 30%;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    box-shadow: 5px 10px #888888;
+}
+
+
+.summary {
+    width: fit-content;
+    height: fit-content;
+    max-height: 250px;
+    margin-left: 5px;
+    overflow: scroll;
+    border-radius: 5px;
+}
+article:hover .summary{
+    
+    box-shadow: 5px 5px 5px 5px #ced0ce;
+}
+
+
+
+
+.fullSummary{
+    display: none;
+}
+ .summary:hover .hide{
+    display: none;
+}
+.summary:hover .fullSummary{
+    display: flex;
+}
+
+.title{
+    flex: 100%;
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.title h3{
+    flex: 40%;
+    font-size:  25px;
+    padding: 0px;
+    height: 25px;
+    text-align: left;
+}
+
+article .title .rightPart{
+    flex: 40%;
+    display: flex;
+    flex-flow: row wrap;
+
+}
+.artNavbar{
+    flex: 100%;
+    height: 40px;
+    display: flex;
+    flex-flow: row;
+    flex-direction: row-reverse;
+}
+
+.artNavbar .favBtn{
+    height: 100%;
+    width: auto;
+}
+
+.artNavbar .hoverFavBtn{
+    opacity: 0%;
+}
+
+article:hover .artNavbar .hoverFavBtn:not(.hoverFavBtn:hover){
+    opacity: 30%;
+}
+
+.hoverFavBtn:hover{
+    opacity: 60%;
+}
+
+.author{
+    flex: 100%;
+    text-align: right;
+    font-size: 10px;
+    align-self: flex-end;
+    color: grey;
+}
+
+
+
+article>img{
+    flex: 20%;
+    width: 33%;
+    height: max-content;
+    margin: 2%;
+    padding: 0%;
+    border-radius: 15%;
+}
+
+article>summary{
+    width: max-content;
+    flex: 50%;
+    text-align: left;
+    margin-left: 10px;
+    max-height: 200px;
+    overflow:scroll;
+    
+    
+}
+
+
+
+form{
+    display: flex;
+    flex-flow: row nowrap;
+    column-gap: 20px;
+
+    background-color: #D4E09B;
+    padding: 20px;
+
+}
+
+form [type=submit]{
+    flex: 40%;
+    background-color: #F19C79;
+    text-align:  center;
+    width: 40%;
+    
+}
+form [type=submit]:hover{
+    background-color: #DDADA7;
+}
+
+footer{
+    text-align: center;
+    background-color: #F6F4D2;
+    margin: 0%;
+    padding: 15px;
+}
+
+@media (max-width: 1394px) {
+   
+    article{
+      max-width: 45%;
+    }
+}
+
+@media (max-width: 1000px) {
+   
+    #posts{
+      flex: 100%;
+    }
+    aside h3{
+        text-align: start;
+        margin-left: 15px;
+    }
+    aside img{
+        width: 50%;
+        height: auto;
+    }
+}
+
+
+
+@media (max-width: 750px) {
+   
+    article{
+        flex:100%;
+      max-width: 100%;
+    }
+    aside{
+        display: none;
+    }
+
+    form [type=submit]{
+        background-color: #F19C79;;
+        width: fit-content;
+        
+    }
+}
+
+@media (max-width: 559px){
+    .topnav form {
+        flex:100%;
+    }
+    .topnav div{
+        flex: 100%;
+        flex-flow: row wrap;
+        justify-content: space-between;
+    }
+    .topnav form [type=submit]{
+        width: 20%;
+    }
+}
+
+@media (max-width: 330px){
+    .topnav form {
+        flex-flow: row wrap;
+    }
+    .topnav form [type=text]{
+        margin: 10px;
+        width: 100%;
+    }
+    
+}
+

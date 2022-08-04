@@ -1,0 +1,16 @@
+GET   http://localhost:6000/books HTTP/1.1
+
+###
+
+POST http://localhost:6000/books HTTP/1.1
+content-type: application/json
+
+{
+    "title": "json-server",
+    "author": "typicode",
+    "description" : "description"
+}
+
+
+###
+DELETE http://localhost:6000/books/4 HTTP/1.1
