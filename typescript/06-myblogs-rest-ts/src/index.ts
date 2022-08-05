@@ -2,6 +2,7 @@ import { BlogsAPI } from "./blogs-api-client.js";
 import { Post, PostCreateDto } from "./posts.js";
 import { idType } from "./shared-types.js";
 import { AppStateStore } from "./state-store.js";
+import { ValidationConfig, ValidationResult } from "./validate.js";
 
 // interface BlogControllerType{
 //   postsSection: HTMLElement;
@@ -29,12 +30,9 @@ class BlogController {
   }
 
   async init() {
-    this.addPostForm.addEventListener(
-      "submit",
-      this.handleSubmitPost.bind(this)
-    );
+    this.addPostForm.addEventListener("submit",this.handleSubmitPost.bind(this));
     this.resetButton.addEventListener("click", this.resetForm.bind(this));
-
+    this.addPostForm.addEventListener("change", this.validateForm, true);
     try {
       const allPosts = await BlogsAPI.getAllPosts();
       AppStateStore.allPosts = allPosts;
@@ -49,7 +47,7 @@ class BlogController {
   }
 
   showError(err: unknown) {
-    this.erorrsDiv.innerHTML = `<div>${err}</div>`;
+    this.erorrsDiv.innerHTML += `<div>${err}</div>`;
   }
 
   addPost(post: Post) {
@@ -144,39 +142,33 @@ class BlogController {
   async handleSubmitPost(event: SubmitEvent) {
     try {
       event.preventDefault();
-      const formData = new FormData(this.addPostForm);
-      const nP: { [key: string]: string } = {};
-      formData.forEach((value, key) => {
-        nP[key] = value.toString();
-      });
 
-      if (!nP.id) {
-        const newPost = new PostCreateDto(
-          nP.title,
-          nP.content,
-          nP.tags.split(/\W+/),
-          nP.imageUrl,
-          parseInt(nP.authorId) || 1
-        );
-        const created = await BlogsAPI.addNewPost(newPost);
-        this.addPost(created);
-      } else {
-        const newPost = new Post(
-          parseInt(nP.id),
-          nP.title,
-          nP.content,
-          nP.tags.split(/\W+/),
-          nP.imageUrl,
-          parseInt(nP.authorId) || 1
-        );
-        const edited = await BlogsAPI.updatePost(newPost);
+      const post = this.getPostFormSnapshot();
+
+      if (post instanceof Post) {
+        const edited = await BlogsAPI.updatePost(post);
         this.editPost(edited);
         AppStateStore.editedPost = undefined;
+      } else {
+        const created = await BlogsAPI.addNewPost(post);
+        this.addPost(created);
       }
+
       this.resetForm();
     } catch (err) {
       this.showError(err);
     }
+  }
+
+  getPostFormSnapshot() : Post | PostCreateDto{
+    const formData = new FormData(this.addPostForm);
+      const nP: { [key: string]: string } = {};
+      formData.forEach((value, key) => {
+        nP[key] = value.toString();
+      });
+      return (!nP.id)?
+        new PostCreateDto(nP.title,nP.content,nP.tags.split(/\W+/),nP.imageUrl,parseInt(nP.authorId) || 1) :
+        new Post(parseInt(nP.id),nP.title,nP.content,nP.tags.split(/\W+/),nP.imageUrl,parseInt(nP.authorId) || 1);
   }
 
   resetForm() {
@@ -185,6 +177,51 @@ class BlogController {
     } else {
       this.fillPostForm(AppStateStore.editedPost);
     }
+  }
+
+  validateForm = (event: Event) => {
+    const validationResult: ValidationResult<Post> = {};
+    const config = AppStateStore.postFormValidationConfig;
+    const formSnapshot = this.getPostFormSnapshot() as Post;
+    let field: keyof ValidationConfig<Post>;
+    for (field in config) {
+      const validators = config[field];
+      if(validators !== undefined) {
+        let errArr: string[];
+        validators.forEach(validator =>{
+          if(validator !== undefined) {
+           const valid = validator(formSnapshot[field]!.toString(), field);
+
+            if(valid){
+              
+
+                errArr.push(valid as string);
+            
+              
+              
+            }
+          }
+        });
+
+        // validationResult[field] = errArr;
+        
+      }
+    }
+    this.showValidationErrors(validationResult);
+  }
+
+  showValidationErrors(validationResult: ValidationResult<Post>) {
+    AppStateStore.postFormErrors = [];
+    let field: keyof ValidationResult<Post>;
+    for (field in validationResult) {
+      const filedErrors = validationResult[field];
+      if (filedErrors !== undefined) {
+        for (const err of filedErrors) {
+          AppStateStore.postFormErrors.push(`${field} -> ${err}<br>`);
+        }
+      }
+    }
+    this.showError(AppStateStore.postFormErrors);
   }
 }
 
