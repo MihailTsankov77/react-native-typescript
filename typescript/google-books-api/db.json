@@ -1,6 +1,13 @@
 {
   "books": [
-   
-   
+    {
+      "id": "xAg7DwAAQBAJ",
+      "title": "Learning React Native",
+      "authors": "Bonnie Eisenman",
+      "imageUrl": "http://books.google.com/books/content?id=xAg7DwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+      "description": "Get a practical introduction to React Native, the JavaScript framework for writing and deploying fully featured mobile apps that render natively. The second edition of this hands-on guide shows you how to build applications that target iOS, Android, and other mobile platforms instead of browsers—apps that can access platform features such as the camera, user location, and local storage. Through code examples and step-by-step instructions, web developers and frontend engineers familiar with React will learn how to build and style interfaces, use mobile components, and debug and deploy apps. You’ll learn how to extend React Native using third-party libraries or your own Java and Objective-C libraries. Understand how React Native works under the hood with native UI components Examine how React Native’s mobile-based components compare to basic HTML elements Create and style your own React Native components and applications Take advantage of platform-specific APIs, as well as modules from the framework’s community Incorporate platform-specific components into cross-platform apps Learn common pitfalls of React Native development, and tools for dealing with them Combine a large application’s many screens into a cohesive UX Handle state management in a large app with the Redux library",
+      "shortDescription": "Get a practical introduction to React Native, the JavaScript framework for writing and deploying fully featured mobile apps that render natively. The second edition of this hands-on guide shows you how to build applications that target iOS, Android, and other mobile platforms instead of browsers—apps that can access platform features such as the camera, user location, and local storage. Through<span class=\"hide\"> ...</span>",
+      "shortTitle": "Learning React Native"
+    }
   ]
 }

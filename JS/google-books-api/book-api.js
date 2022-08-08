@@ -63,7 +63,7 @@ function innerHtmlCode(book) {
 
                 <summary class="summary">
                     <span>${summ.short}</span>
-                    <span class=\"fullSummary\">${summ.fullText}</span>
+                    <span class="fullSummary">${summ.fullText}</span>
                 </summary>
                     
             </article>

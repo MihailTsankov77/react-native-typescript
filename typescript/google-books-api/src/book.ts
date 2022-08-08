@@ -1,13 +1,18 @@
+export type idType = string;
+
 export class Book {
+  static repoName = "books";
   shortDescription: string;
   shortTitle: string;
 
   constructor(
-    public id: number,
+    public id: idType,
     public title: string | undefined,
-    public authors: string | undefined,
+    public authors: string[] |string | undefined,
     public imageUrl: string | undefined,
-    public description: string | undefined
+    public description: string | undefined,
+    public checkFav = false,
+    public isFav = false
   ) {
 
     this.title = this.title || "No title.";
@@ -15,14 +20,18 @@ export class Book {
     this.imageUrl = this.imageUrl || "No imageUrl.";
     this.description = this.description || "No description.";
 
-    // this.authors = this.#formatAuthors(this.authors);
+    if(Array.isArray(this.authors)){
+      this.authors = this.#formatAuthors(this.authors);
+    }
+
     this.shortDescription = this.#shortText(this.description,400,'<span class="hide"> ...</span>');
     this.shortTitle = this.#shortText( this.title, 30, "...");
   }
 
-//   #formatAuthors(authors: string) {
-//     return authors.replace(",", ", ");
-//   }
+  #formatAuthors(authors: string[]): string{
+    const str = authors.toString();
+    return str.replace(',', ', ');
+  }
 
   #shortText(text: string, symbols: number, end: string) {
     let substring = text.substring(0, symbols);

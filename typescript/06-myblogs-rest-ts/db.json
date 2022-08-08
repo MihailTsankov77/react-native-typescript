@@ -58,23 +58,23 @@
       "id": 6
     },
     {
-      "title": "",
-      "content": "gf",
+      "title": "bob",
+      "content": "e",
       "tags": [
         ""
       ],
       "imageUrl": "",
-      "authorId": 1,
+      "authorId": null,
       "id": 7
     },
     {
-      "title": "l",
+      "title": "",
       "content": "",
       "tags": [
         ""
       ],
       "imageUrl": "",
-      "authorId": 1,
+      "authorId": null,
       "id": 8
     }
   ],
