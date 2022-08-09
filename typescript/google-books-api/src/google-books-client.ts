@@ -25,7 +25,7 @@ class BooksApi implements BooksApiInt {
     const googleBooks = Object.values(await resp.json())[2] as Array<BookInt>;
     const books: Book[] = [];
     googleBooks.forEach((gBook) => {
-      books.push(new Book(gBook.id, gBook.volumeInfo.title, gBook.volumeInfo.authors, gBook.volumeInfo.imageLinks.thumbnail, gBook.volumeInfo.description));
+      books.push(new Book(gBook.id, gBook.volumeInfo.title, gBook.volumeInfo.authors, gBook.volumeInfo.imageLinks? gBook.volumeInfo.imageLinks.thumbnail: undefined, gBook.volumeInfo.description));
     });
     return Promise.resolve(books);
   }

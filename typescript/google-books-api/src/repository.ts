@@ -1,3 +1,4 @@
+import { BookComments } from "./book-comment.js";
 import { Book, idType } from "./book.js";
 
 type Identifiable<K> = { id: K };
@@ -5,6 +6,7 @@ type Identifiable<K> = { id: K };
 export interface RepositoryInt<K, V extends Identifiable<K>> {
     findAll(): Promise<V[]> | undefined;
     findById(id: K): Promise<V> | undefined;
+    update(entety: V): Promise<V> | undefined;
     create(entety: V): Promise<V>;
     delete(id: K): Promise<V> | undefined;
   }
@@ -15,15 +17,13 @@ export class Repository<K, V extends Identifiable<K>> implements RepositoryInt<K
       this.#DB_BASE_URL += repoName;
   }
   
-  findAll(): Promise<V[]> | undefined {
+  async findAll(): Promise<V[]> {
     return this.handleRequest(this.#DB_BASE_URL);
   }
-  findById(id: K): Promise<V>{
+  async findById(id: K): Promise<V>{
     return this.handleRequest(`${this.#DB_BASE_URL}/${id}`);
   }
-  create(entety: V): Promise<V> {
-    console.log(entety);
-    
+  async create(entety: V): Promise<V> {
     return this.handleRequest(this.#DB_BASE_URL, {
       method: 'POST',
       headers: {
@@ -32,8 +32,19 @@ export class Repository<K, V extends Identifiable<K>> implements RepositoryInt<K
       body: JSON.stringify(entety)
   });
   }
+
+  async update(entety: V): Promise<V> {
+    return this.handleRequest(`${this.#DB_BASE_URL}/${entety.id}`, {
+      method: "PUT",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(entety),
+    });
+  }
+
  
-  delete(id: K): Promise<V> | undefined {
+  async delete(id: K): Promise<V> {
     return this.handleRequest(`${this.#DB_BASE_URL}/${id}`, {
         method: 'DELETE'
     });
@@ -55,3 +66,4 @@ export class Repository<K, V extends Identifiable<K>> implements RepositoryInt<K
 }
 
 export const BooksRepo = new Repository<idType, Book>("books");
+export const CommentsRepo = new Repository<idType, BookComments>("comments");

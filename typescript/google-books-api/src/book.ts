@@ -1,3 +1,5 @@
+import { BooksRepo } from "./repository.js";
+
 export type idType = string;
 
 export class Book {
@@ -10,9 +12,7 @@ export class Book {
     public title: string | undefined,
     public authors: string[] |string | undefined,
     public imageUrl: string | undefined,
-    public description: string | undefined,
-    public checkFav = false,
-    public isFav = false
+    public description: string | undefined
   ) {
 
     this.title = this.title || "No title.";
@@ -26,6 +26,21 @@ export class Book {
 
     this.shortDescription = this.#shortText(this.description,400,'<span class="hide"> ...</span>');
     this.shortTitle = this.#shortText( this.title, 30, "...");
+  }
+
+  public static async isFavorite(book: Book){
+    const books: Book[] | undefined = await BooksRepo.findAll();
+    let isFav = false;
+    if (books) {
+      books.forEach((BookElem) => {  
+        if (BookElem.id === book.id) {
+          isFav=true;
+          return;
+        }
+      });
+    }
+
+    return isFav;
   }
 
   #formatAuthors(authors: string[]): string{
