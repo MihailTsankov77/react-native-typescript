@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/main.css">
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="materialize/css/materialize.min.css" media="screen,projection" />
+    <script src="dist/index.js" type="module" defer></script>
+    
+    <script type="text/javascript" src="materialize/js/materialize.min.js" defer></script>
+</head>
+
+<body>
+    <nav class="light-blue lighten-1" role="navigation">
+        <div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo">Test</a>
+            <ul class="right hide-on-med-and-down">
+                <li><a id="logInOut">Log in</a></li>
+            </ul>
+            <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+        </div>
+    </nav>
+    <div class="section no-pad-bot" id="index-banner">
+        <div class="container">
+            <h1 class="header center orange-text">Log In Out test</h1>
+
+            <!--Add/Edit blog form-->
+            <div class="row">
+                
+                <form id="registration-form" class="col s12">
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <input id="firstName" name="firstName" type="text" class="validate">
+                            <label for="firstName">First name</label>
+                        </div>
+                        <div class="input-field col s6">
+                            <label for="lastName">Last name</label>
+                            <input id="lastName" name="lastName" type="text" class="validate">
+                            
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <input id="username" name="username" type="text" class="validate">
+                            <label for="username">Username</label>
+                        </div>
+                        <div class="input-field col s6">
+                            <input id="password" name="password" type="text" class="validate">
+                            <label for="password">Password</label>
+                        </div>
+                    </div>
+                    <!-- TODO Dropdown -->
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input id="gender" name="gender" type="text" class="validate">
+                            <label for="gender">Gender</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input id="imageUrl" name="imageUrl" type="url" class="validate">
+                            <label for="imageUrl">Image URL</label>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <textarea id="description" name="description" class="materialize-textarea"></textarea>
+                            <label for="description">Description</label>
+                        </div>
+                    </div>
+
+                    <button class="btn waves-effect waves-light" type="submit" name="submit" id="submit" disabled>Submit
+                        <i class="material-icons right">send</i>
+                    </button>
+                    
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div id="errors"></div>
+        <section id="main" class="row"></section>
+    </div>
+
+    <footer class="page-footer orange">
+        <div class="container">
+            <div class="row">
+                <div class="col l6 s12">
+                    <h5 class="white-text">Company Bio</h5>
+                    <p class="grey-text text-lighten-4">We are a team of college students working on this project like
+                        it's our full time job. Any amount would help support and continue development on this project
+                        and is greatly appreciated.</p>
+
+
+                </div>
+                <div class="col l3 s12">
+                    <h5 class="white-text">Settings</h5>
+                    <ul>
+                        <li><a class="white-text" href="#!">Link 1</a></li>
+                        <li><a class="white-text" href="#!">Link 2</a></li>
+                        <li><a class="white-text" href="#!">Link 3</a></li>
+                        <li><a class="white-text" href="#!">Link 4</a></li>
+                    </ul>
+                </div>
+                <div class="col l3 s12">
+                    <h5 class="white-text">Connect</h5>
+                    <ul>
+                        <li><a class="white-text" href="#!">Link 1</a></li>
+                        <li><a class="white-text" href="#!">Link 2</a></li>
+                        <li><a class="white-text" href="#!">Link 3</a></li>
+                        <li><a class="white-text" href="#!">Link 4</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer-copyright">
+            <div class="container">
+                Made by <a class="orange-text text-lighten-3" href="http://materializecss.com">Materialize</a>
+            </div>
+        </div>
+    </footer>
+    
+</body>
+
+</html>
