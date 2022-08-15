@@ -4,7 +4,6 @@ import { Component } from 'react';
 import RigistartionForm, { validatorsType } from './registartionForm';
 import { UsersRepo } from './repository';
 import UsersInfo from './ShowUserInfo';
-import { AppStateStoreLogin } from './state-store';
 import { User } from "./user";
 import { Validators } from './validators';
 
@@ -15,12 +14,14 @@ export interface UserListener{
 
 interface AppState{
   users: User[];
+  edited: User | undefined
 }
 
 class App extends Component<{},AppState> {
 
   state: Readonly<AppState> ={
-    users: []
+    users: [],
+    edited: undefined
   }
   validators:validatorsType =  {
     firstName: [Validators.required(), Validators.len(2, 15)],
@@ -34,14 +35,23 @@ class App extends Component<{},AppState> {
 
 async componentDidMount() {
   const allUsers = await UsersRepo.findAll();
-  this.setState({users: allUsers});
+  this.setState({
+    users: allUsers
+  });
 }
 
   handleCreateUser = async (user: User) =>{
-    const createdUser = await UsersRepo.create(user);
+    if(this.state.edited){
+      const updated = await UsersRepo.update(user);
 
-    this.setState(({users}) => ({users: users.concat(createdUser)}));
+      this.setState(({users}) => ({users: users.map((user) => user.id === updated.id? updated: user), edited: undefined}));
       
+    }else{
+      const createdUser = await UsersRepo.create(user);
+
+      this.setState(({users}) => ({users: users.concat(createdUser)}));
+    }
+   
   }
 
   handleDeleteUser = async (user: User) =>{
@@ -50,6 +60,12 @@ async componentDidMount() {
     this.setState(({users}) => ({users: users.filter((elem) => elem.id!== user.id)}));
       
   }
+  
+  handleEdit = (user: User)=>{
+    this.setState({edited: user});
+  }
+
+
 
   render(): React.ReactNode {
 
@@ -57,8 +73,8 @@ async componentDidMount() {
       <div className="App">
         <header className="App-header">
           
-            <RigistartionForm onCreateUser={this.handleCreateUser} validators={this.validators}/>
-            <UsersInfo users={this.state.users} onDelete={this.handleDeleteUser}/>
+            <RigistartionForm onCreateUser={this.handleCreateUser} validators={this.validators} edited={this.state.edited} key={this.state.edited?.id} />
+            <UsersInfo users={this.state.users} onDelete={this.handleDeleteUser} onEdit={this.handleEdit} />
           
         </header>
       </div>

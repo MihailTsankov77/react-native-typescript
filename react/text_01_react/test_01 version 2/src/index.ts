@@ -6,7 +6,7 @@ export class switchView{
     static registationFormParent = document.getElementById("formContainer") as HTMLElement;
     static mainSection = document.getElementById("main") as HTMLElement;
 
-    public static setRegistartionView(user: User | undefined = undefined){
+    public static setRegistartionView(){
         this.mainSection.innerHTML="";
         this.registationFormParent.innerHTML=`
         <h1 class="header center orange-text">Registration</h1>
@@ -60,9 +60,8 @@ export class switchView{
                 </form>
         `
         const registationForm = document.getElementById("registration-form") as HTMLFormElement;
-        const RegistController = new GenericController<User>(registationForm, AppStateStoreRegistation, true, user);
+        const RegistController = new GenericController<User>(registationForm, AppStateStoreRegistation, true);
         RegistController.init();
-        RegistController.fillForm()
     }
 
     public static setLoginView(){

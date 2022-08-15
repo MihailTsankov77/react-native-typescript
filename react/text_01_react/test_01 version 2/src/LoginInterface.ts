@@ -58,8 +58,7 @@ export class LoginInterface{
   }
 
   handleEditPost() {
-    
-    switchView.setRegistartionView(this.user);
+    switchView.setRegistartionView();
     
   }
 

@@ -1,0 +1,32 @@
+{
+  "users": [
+    {
+      "id": 10,
+      "firstName": "dds",
+      "lastName": "dsdsds",
+      "username": "dsdsdswrfd434s",
+      "password": "dsgedhwrfb^&8908",
+      "gender": "fsafsfs",
+      "imageUrl": "https://dz2cdn1.dzone.com/storage/temp/8746383-json-server.png",
+      "description": "fasdbf",
+      "registrationTimestamp": "2022-08-15T14:14:37.880Z",
+      "lastModificationTimestamp": "2022-08-15T14:14:37.880Z",
+      "status": 0,
+      "userRole": 0
+    },
+    {
+      "id": 11,
+      "firstName": "dds",
+      "lastName": "dsdsds",
+      "username": "dsdsdsddd",
+      "password": "dsgedhwrfb^&8908",
+      "gender": "fsafsfsd",
+      "imageUrl": "https://dz2cdn1.dzone.com/storage/temp/8746383-json-server.png",
+      "description": "fasdbf",
+      "registrationTimestamp": "2022-08-15T14:08:20.399Z",
+      "lastModificationTimestamp": "2022-08-15T14:08:20.399Z",
+      "status": 0,
+      "userRole": 0
+    }
+  ]
+}

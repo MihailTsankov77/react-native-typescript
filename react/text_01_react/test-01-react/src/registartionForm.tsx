@@ -8,6 +8,7 @@ import { Validator, Validators } from "./validators";
 interface RigistartionFormProps {
     onCreateUser: UserListener;
     validators: validatorsType;
+    edited: User | undefined;
 }
 export type validatorsType ={
     [P in keyof userFormState]: Validator[];
@@ -26,7 +27,7 @@ type userFormState = {
 
 
 interface RigistartionFormState{
-    userField: Partial<userFormState>;
+    userField: userFormState;
     errors: Partial<userFormState>;
     OnButton:boolean;
 }
@@ -35,13 +36,13 @@ interface RigistartionFormState{
  class RigistartionForm extends Component<RigistartionFormProps, RigistartionFormState> {
     state: Readonly<RigistartionFormState> = {
         userField:{
-            firstName: '',
-            lastName: '',
-            username: '',
-            password: '',
-            gender: '',
-            imageUrl: '',
-            description: '' 
+            firstName: this.props.edited?.firstName || ' ',
+            lastName: this.props.edited?.lastName || ' ',
+            username: this.props.edited?.username || ' ',
+            password: this.props.edited?.password || ' ',
+            gender: this.props.edited?.gender || ' ',
+            imageUrl: this.props.edited?.imageUrl || ' ',
+            description: this.props.edited?.description || ' ' 
         },
         errors:{
             firstName: ' ',
@@ -60,13 +61,18 @@ interface RigistartionFormState{
         
         this.setState( ({userField}: RigistartionFormState) => ({userField: {...userField, [fieldName]: event.target.value } }));
         
-        this.validateField(event.target.value, fieldName, this.props.validators[fieldName]);
+        for(const key in this.state.errors){
+            const fieldName = key as keyof typeof this.state.errors;
+            this.validateField(this.state.userField[fieldName]!, fieldName , this.props.validators[fieldName]);
+        }
     }    
+
+
 
     handleTodoSubmit =(event: React.FormEvent) =>{
         event.preventDefault();
         this.props.onCreateUser(new User(
-            undefined,
+            this.props.edited?.id || undefined,
             this.state.userField.firstName!,
             this.state.userField.lastName!,
             this.state.userField.username!,
@@ -115,12 +121,12 @@ interface RigistartionFormState{
                 <div className="row">
                     <div className="input-field col s6">
                         <input id="firstName" name="firstName" type="text" className="validate" value={this.state.userField.firstName }
-            onChange={this.handleTextChanged}/>
+            onChange={this.handleTextChanged} />
             {this.state.errors.firstName && (<span>{this.state.errors.firstName}</span>)}
-                        <label htmlFor="firstName">First name</label>
+                        <label htmlFor="firstName" className={this.props.edited? "active" : ""}>First name</label>
                     </div>
                     <div className="input-field col s6">
-                        <label htmlFor="lastName">Last name</label>
+                        <label htmlFor="lastName" className={this.props.edited? "active" : ""}>Last name</label>
                         <input id="lastName" name="lastName" type="text" className="validate" value={this.state.userField.lastName}
             onChange={this.handleTextChanged}/>
              {this.state.errors.lastName && (<span>{this.state.errors.lastName}</span>)}           
@@ -131,13 +137,13 @@ interface RigistartionFormState{
                         <input id="username" name="username" type="text" className="validate" value={this.state.userField.username}
             onChange={this.handleTextChanged}/>
             {this.state.errors.username && (<span>{this.state.errors.username}</span>)}
-                        <label htmlFor="username">Username</label>
+                        <label htmlFor="username" className={this.props.edited? "active" : ""}>Username</label>
                     </div>
                     <div className="input-field col s6">
                         <input id="password" name="password" type="text" className="validate" value={this.state.userField.password}
             onChange={this.handleTextChanged}/>
             {this.state.errors.password && (<span>{this.state.errors.password}</span>)}
-                        <label htmlFor="password">Password</label>
+                        <label htmlFor="password" className={this.props.edited? "active" : ""}>Password</label>
                     </div>
                 </div>
                 <div className="row">
@@ -145,7 +151,7 @@ interface RigistartionFormState{
                         <input id="gender" name="gender" type="text" className="validate" value={this.state.userField.gender}
             onChange={this.handleTextChanged}/>
             {this.state.errors.gender && (<span>{this.state.errors.gender}</span>)}
-                        <label htmlFor="gender">Gender</label>
+                        <label htmlFor="gender" className={this.props.edited? "active" : ""}>Gender</label>
                     </div>
                 </div>
                 <div className="row">
@@ -153,14 +159,14 @@ interface RigistartionFormState{
                         <input id="imageUrl" name="imageUrl" type="url" className="validate" value={this.state.userField.imageUrl}
             onChange={this.handleTextChanged}/>
             {this.state.errors.imageUrl && (<span>{this.state.errors.imageUrl}</span>)}
-                        <label htmlFor="imageUrl">Image URL</label>
+                        <label htmlFor="imageUrl" className={this.props.edited? "active" : ""}>Image URL</label>
                     </div>
                 </div>
 
                 <div className="row">
                     <div className="input-field col s12">
                         <textarea id="description" name="description" className="materialize-textarea" value={this.state.userField.description} onChange={this.handleTextChanged}></textarea>
-                        <label htmlFor="description">Description</label>
+                        <label htmlFor="description" className={this.props.edited? "active" : ""}>Description</label>
                     </div>
                 </div>
                  {this.state.OnButton?

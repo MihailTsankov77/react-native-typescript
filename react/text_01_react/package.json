@@ -1,0 +1,13 @@
+{
+  "name": "text_01_react",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Mihail Tsankov",
+  "license": "Apache-2.0",
+  "scripts": {
+    "api": "json-server db.json routes.json --port 4000"
+  },
+  "devDependencies": {
+    "json-server": "^0.17.0"
+  }
+}

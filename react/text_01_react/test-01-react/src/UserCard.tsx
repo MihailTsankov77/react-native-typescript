@@ -4,9 +4,10 @@ import { User } from "./user";
 interface UserCardProps {
     user: User;
     onDelete:UserListener;
+    onEdit: UserListener;
 }
  
-function UserCard({user, onDelete}: UserCardProps) {
+function UserCard({user, onDelete, onEdit}: UserCardProps) {
   function handleDeleteButton(event: React.MouseEvent){
     onDelete(user)
   }
@@ -27,8 +28,7 @@ function UserCard({user, onDelete}: UserCardProps) {
         <p>{user.description}</p>
       </div>
       <div className="card-action">
-        <button className="btn waves-effect waves-light" type="button" id="edit{user.id
-      }">Edit
+        <button className="btn waves-effect waves-light" type="button" onClick={()=>onEdit(user)}>Edit
           <i className="material-icons right">send</i>
         </button>
         <button className="btn waves-effect waves-light red lighten-1" type="button" onClick={handleDeleteButton} id="delete{user.id

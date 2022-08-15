@@ -1,0 +1,6 @@
+.comment-item{
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 5px;
+  width: 200%;
+}

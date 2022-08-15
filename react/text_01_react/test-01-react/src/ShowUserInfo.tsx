@@ -6,6 +6,7 @@ import UserCard from "./UserCard";
 interface UserInfoProps {
     users: User[];
     onDelete: UserListener;
+    onEdit: UserListener;
 }
 
 

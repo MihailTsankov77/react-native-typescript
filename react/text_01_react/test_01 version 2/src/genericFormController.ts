@@ -11,114 +11,85 @@ import { ValidationResultTypeGeneric, Validator } from "./validators.js";
 
 export class GenericController<P >{
 
-  errorsDiv: HTMLElement;
+    errorsDiv: HTMLElement;
+  
+    constructor(public form: HTMLFormElement, public AppStore: AppStateGeneric<P>, public addUser = false) {
+  
+      this.errorsDiv = document.getElementById("errors") as HTMLElement;
+    }
 
-  constructor(public form: HTMLFormElement, 
-              public AppStore: AppStateGeneric<P>, 
-              public addUser = false, 
-              public user: User | undefined = undefined
-              ) {
+    async init() {
+        this.form.addEventListener("submit", this.handleSubmitPost.bind(this));
+        
+        this.form.addEventListener("change", this.validateForm, true);
+        this.form.addEventListener("keyup", this.stateChangeToDirty);
 
-    this.errorsDiv = document.getElementById("errors") as HTMLElement;
-  }
+        try{
+            const users: User[] | undefined = await UsersRepo.findAll();
+            if (users) {
+                for(let i=0; i<users.length; i++){
+                    const user:userInfo = {
+                        id: users[i].id,
+                        username: users[i].username,
+                        password: users[i].password
+                    }
+                    UsersInfo.push(user);
+                    
+                }  
 
-  async init() {
-    this.form.addEventListener("submit", this.handleSubmitPost.bind(this));
-    
-    this.form.addEventListener("change", this.validateForm, true);
-    this.form.addEventListener("keyup", this.stateChangeToDirty);
-
-    try{
-        const users: User[] | undefined = await UsersRepo.findAll();
-        if (users) {
-            for(let i=0; i<users.length; i++){
-                const user:userInfo = {
-                    id: users[i].id,
-                    username: users[i].username,
-                    password: users[i].password
-                }
-              UsersInfo.push(user);
-            }  
+            }
+        } catch (err) {
+            this.showError(err);
         }
-    } catch (err) {
-        this.showError(err);
-    }  
-  } 
 
-
-
-  showError(err: unknown) {
-    this.errorsDiv.innerHTML = `<div>${err}</div>`;
-  }
-
-  async handleSubmitPost(event: SubmitEvent) {
-    try {
-      event.preventDefault();
-    
-      const user = this.getPostFormSnapshot();
-
-      let id: number | undefined = -1 ; 
-    
-    if(this.addUser){
-      if(!this.user){
-        const createdUser = await UsersRepo.create(user);
-        id = createdUser.id;
-      }else{
-
-        user.registrationTimestamp = this.user.registrationTimestamp;
-        await UsersRepo.update(user);
-        id = this.user.id;
+        
       }
-      
-    }else{
-            
-      for(let i=0; i<UsersInfo.length; i++){
-        if (UsersInfo[i].username === user.username) { 
-            id = UsersInfo[i].id;
-            break;
+
+
+
+      showError(err: unknown) {
+        this.errorsDiv.innerHTML = `<div>${err}</div>`;
+      }
+
+      async handleSubmitPost(event: SubmitEvent) {
+        try {
+          event.preventDefault();
+        
+          const user = this.getPostFormSnapshot();
+
+
+       
+        if(this.addUser){
+          const createdUser = await UsersRepo.create(user);
+          const loginInterface = new LoginInterface(createdUser.id);
+          loginInterface.init() 
+        }else{
+            let id: number | undefined = -1 ;     
+          for(let i=0; i<UsersInfo.length; i++){
+            if (UsersInfo[i].username === user.username) { 
+                id = UsersInfo[i].id;
+                break;
+            }
+          } 
+          const loginInterface = new LoginInterface(id);
+          loginInterface.init()
         }
-      } 
-      
-    }
-    const loginInterface = new LoginInterface(id);
-    loginInterface.init()
-      
-      this.form.remove();
-
-    } catch (err) {
-      this.showError(err);
-    }
-  }
+          
+          this.form.remove();
     
-  getPostFormSnapshot(): User {
-    const formData = new FormData(this.form);
-    const nU: { [key: string]: string } = {};
-    formData.forEach((value, key) => {
-      nU[key] = value.toString();
-    });
-    return new User(undefined, nU.firstName, nU.lastName, nU.username, nU.password, nU.gender, nU.imageUrl, nU.description, new Date(), new Date);
-  }
-
-  fillForm() {
-   
-    if(this.user!==undefined){
-      console.log("fgds");
-      
-      for (const key in User) {
-      const elem = this.form.querySelector(`#${key}`) as HTMLFormElement
-      console.log(elem)
-      if(elem){
-        elem.value = this.user[key as keyof User];
+        } catch (err) {
+          this.showError(err);
+        }
       }
-      
-      const label = this.form.querySelector(`label[for=${key}]`) as HTMLElement;
-      if (label) {
-        label.className = "active";
-      }
-    }
-    }
     
-  }
+      getPostFormSnapshot(): User {
+        const formData = new FormData(this.form);
+        const nU: { [key: string]: string } = {};
+        formData.forEach((value, key) => {
+          nU[key] = value.toString();
+        });
+        return new User(undefined, nU.firstName, nU.lastName, nU.username, nU.password, nU.gender, nU.imageUrl, nU.description, new Date(), new Date);
+      }
 
       
   validateForm = (event: Event) => {

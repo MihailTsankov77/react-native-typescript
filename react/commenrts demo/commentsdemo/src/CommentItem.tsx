@@ -1,6 +1,7 @@
 
 import { CommentListener } from "./App";
 import { Comments, CommentStatus } from "./comment";
+import './CommentItem.css'
 
 interface CommentItemProps {
   comment: Comments;
