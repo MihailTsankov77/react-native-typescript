@@ -1,4 +1,7 @@
+
+import React from "react";
 import { UserListener } from "./App";
+import logHOC from "./logHOC";
 import { User } from "./user";
 
 interface UserCardProps {
@@ -7,7 +10,7 @@ interface UserCardProps {
     onEdit: UserListener;
 }
  
-function UserCard({user, onDelete, onEdit}: UserCardProps) {
+ const UserCard =  React.forwardRef(({user, onDelete, onEdit}: UserCardProps) => {
   function handleDeleteButton(event: React.MouseEvent){
     onDelete(user)
   }
@@ -38,6 +41,6 @@ function UserCard({user, onDelete, onEdit}: UserCardProps) {
       </div>
       </div>
     </article> );
-}
+})
  
-export default UserCard;
+export default logHOC(UserCard);

@@ -5,6 +5,7 @@ import RigistartionForm, { validatorsType } from './registartionForm';
 import { UsersRepo } from './repository';
 import UsersInfo from './ShowUserInfo';
 import { User } from "./user";
+import UserCard from './UserCard';
 import { Validators } from './validators';
 
 export interface UserListener{
@@ -66,7 +67,7 @@ async componentDidMount() {
   }
 
 
-
+  
   render(): React.ReactNode {
 
     return (
@@ -74,7 +75,7 @@ async componentDidMount() {
         <header className="App-header">
           
             <RigistartionForm onCreateUser={this.handleCreateUser} validators={this.validators} edited={this.state.edited} key={this.state.edited?.id} />
-            <UsersInfo users={this.state.users} onDelete={this.handleDeleteUser} onEdit={this.handleEdit} />
+            <UsersInfo users={this.state.users} onDelete={this.handleDeleteUser} onEdit={this.handleEdit} Comp={UserCard}/>
           
         </header>
       </div>
