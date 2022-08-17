@@ -15,8 +15,6 @@ function logHOC<T>(Comp: ComponentType<T>){
         }
     }
 
-    
-     
       return React.forwardRef<T, T>((props, ref)=>{
         return <LogHoc forwardedRef={ref} {...props}  />;
       });
