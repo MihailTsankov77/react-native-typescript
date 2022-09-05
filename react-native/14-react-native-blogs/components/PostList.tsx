@@ -57,11 +57,7 @@ const PostList = forwardRef<FlatList<Post>, Props>((props, fRef) => {
             renderItem={({ item: post }) => <PostItem getAnimation={handleAnimations} filter={onFilterTags} tagsFilter={tagsFilter} post={post} key={post.id!} {...rest} />}
             stickyHeaderIndices={[0]}
             ListHeaderComponent={<>
-                {/* <PurpleRain numberOfDrops={1}/>
-                <PurpleRain numberOfDrops={2}/>
-                <PurpleRain numberOfDrops={3}/>
-                <PurpleRain numberOfDrops={4}/> */}
-
+        
 {/*                 
                 <Progressbar min={0} max={100} value={progressbar} />
                 <Pressable onPress={() => setProgressbar(progressbar+ 10)}>

@@ -19,7 +19,7 @@ import Draggable from "./Draggable";
 import DropArea from "./DropArea";
 
 
-export const PAGE_LIMIT= 3;
+export const PAGE_LIMIT = 3;
 
 
 export enum Views {
@@ -59,30 +59,21 @@ class App extends Component<{}, AppState> {
 
   
   componentDidMount(){
-    
     this.loadMorePosts();
   }
-
-  
-
   
   loadMorePosts =async () => {
   
     try {
       const newPosts = await BlogsAPI.findByPage(this.state.page, PAGE_LIMIT);
       this.setState({errors: undefined});
-      
-      this.addPosts(newPosts);
+      this.setState(({posts, page})=> ({posts: posts.concat(newPosts), page: page + 1}));
+
     } catch (err) {
       this.setState({ errors: err as string })
     }
   }
-  addPosts = (newPosts: Post[]) =>{
-   
-    
-    this.setState(({posts, page})=> ({posts: posts.concat(newPosts), page: page + 1}));
-   
-  }
+  
 
   componentDidUpdate(prevProps: Readonly<{}>, prevState: Readonly<AppState>, snapshot?: any): void {
     if (this.state.activeView === Views.PostListView) {
