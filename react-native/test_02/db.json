@@ -1,6 +1,7 @@
 {
   "Questions": [
     {
+      "id": 1,
       "type": "MultipleChoise",
       "text": "BLoblbolbb",
       "picture": "",
@@ -16,17 +17,16 @@
         },
         {
           "id": 1,
-          "scorePr": 10,
+          "scorePr": 100,
           "created": "Wed Sep 07 2022",
           "modified": "Wed Sep 07 2022",
           "text": "2",
           "picture": ""
         }
       ],
+      "position": 2,
       "created": "Wed Sep 07 2022",
-      "modified": "Wed Sep 07 2022",
-      "id": 1,
-      "position": 0
+      "modified": "Wed Sep 07 2022"
     },
     {
       "id": 2,
@@ -37,7 +37,7 @@
       "answers": [
         {
           "id": 0,
-          "scorePr": 10,
+          "scorePr": 100,
           "created": "Wed Sep 07 2022",
           "modified": "Wed Sep 07 2022",
           "text": "1",
@@ -50,6 +50,50 @@
           "modified": "Wed Sep 07 2022",
           "text": "2",
           "picture": ""
+        }
+      ],
+      "position": 0,
+      "created": "Wed Sep 07 2022",
+      "modified": "Wed Sep 07 2022"
+    },
+    {
+      "id": 3,
+      "type": "MultipleResponse",
+      "text": "Witch lib allows multy pltform react proggramming",
+      "picture": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/2300px-React-icon.svg.png",
+      "points": 5,
+      "answers": [
+        {
+          "id": 0,
+          "scorePr": 0,
+          "created": "Wed Sep 07 2022",
+          "modified": "Wed Sep 07 2022",
+          "text": "React",
+          "picture": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/2300px-React-icon.svg.png"
+        },
+        {
+          "id": 1,
+          "scorePr": 100,
+          "created": "Wed Sep 07 2022",
+          "modified": "Wed Sep 07 2022",
+          "text": "React Native",
+          "picture": "https://toppng.com/uploads/preview/react-native-svg-transformer-allows-you-import-svg-aperture-science-innovators-logo-11562851994zqcpwozsvy.png"
+        },
+        {
+          "id": 2,
+          "scorePr": 0,
+          "created": "Wed Sep 07 2022",
+          "modified": "Wed Sep 07 2022",
+          "text": "Next.js",
+          "picture": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Nextjs-logo.svg/1200px-Nextjs-logo.svg.png"
+        },
+        {
+          "id": 3,
+          "scorePr": -30,
+          "created": "Wed Sep 07 2022",
+          "modified": "Wed Sep 07 2022",
+          "text": "jquery",
+          "picture": "https://avatars.githubusercontent.com/u/70142?s=280&v=4"
         }
       ],
       "position": 1,

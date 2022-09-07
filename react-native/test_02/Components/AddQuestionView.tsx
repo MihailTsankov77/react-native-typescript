@@ -29,74 +29,71 @@ export default class AddQuestionView extends Component<AddQuestionViewProps, Add
     
     sortQuestions = () =>{
         const {questions, onPositionMove} = this.props;
+        const existingQuestions: Question[] = questions.filter(quest => quest.position!==undefined);
+        const undefQuestions = questions.filter(quest => quest.position==undefined);
+
+        const sortedQuestions = mergeSort(existingQuestions);
         
-        const sortedQuestions: Question[] = [];
-
-        for (let i = 0; i < questions.length; i++) {
-            const quest = questions[i];
-
-            if(quest.position === undefined){
-                quest.position = sortedQuestions.length;
-                onPositionMove(quest);
-            } 
-            if(sortedQuestions.length === 0){
-                sortedQuestions.push(quest);
-                continue;
-            }
-
-            if(quest.position > sortedQuestions[sortedQuestions.length-1].position){
-                sortedQuestions.push(quest);
-                continue;
-            }else if(quest.position < sortedQuestions[sortedQuestions.length-1].position){
-                let index = sortedQuestions.length-1
-                for (; quest.position < sortedQuestions[index].position; index--){}
-                sortedQuestions.splice(index+1, 0, quest);
-            }
-        }
-
+        undefQuestions.forEach(ques =>{
+            ques.position = sortedQuestions[sortedQuestions.length-1].position!+1;
+            onPositionMove(ques);
+            sortedQuestions.push(ques);
+        });
         return sortedQuestions;
     }
 
-    handleMoveUp = (quest: Question) =>{
+   
+    handleMove = (item: Question, isUp: boolean) =>{
+
+        const id = this.state.questions.indexOf(item);
+        const nextId = !isUp? id+1 : id-1;
+        const updQuestions = this.state.questions;
+
+        item.position! += isUp? -1 : +1 ;
+        this.props.onPositionMove(item);
+
+        const Other = updQuestions[nextId];
+        Other.position! += !isUp? -1 : +1 ;
+        this.props.onPositionMove(Other);
+
+        [updQuestions[id], updQuestions[nextId]] = [updQuestions[nextId], updQuestions[id]];
+        this.setState({questions: updQuestions})
         
-        quest.position!--;
-        const {questions} = this.state;
-        let old: Question;
-        this.setState({questions: questions.map(q => {
-            if(quest.position! === q.position){
-                q.position++;
-                old = q;
-                this.props.onPositionMove(q);
-                return quest;
-            }
-            if(quest.position!+1 === q.position){
-                return old;
-            }
-            return q;
-        })});
-    }
-    handleMoveDown = (quest: Question) =>{
-        quest.position!++;
-        const {questions} = this.state;
-        let old: Question;
-        this.setState({questions: questions.map(q => {
-            if(quest.position! === q.position){
-                q.position--;
-                old = q;
-                this.props.onPositionMove(q);
-                return quest;
-            }
-            if(quest.position!-1 === q.position){
-                return old;
-            }
-            return q;
-        })});
     }
 
   render() {
     return (<>
         <AddQuestionsForm onCreate={this.props.onCreate} edited={this.props.edited}/>
-        <List<Question> onDelete={this.props.onDelete} options={{onUp: this.handleMoveUp, onDown: this.handleMoveDown}} onEdit={this.props.onEdit} items={this.props.questions} Card={QuestionCard as unknown as ComponentType<Question>} />
+        <List<Question> onDelete={this.props.onDelete} options={{onMove: this.handleMove}} onEdit={this.props.onEdit} items={this.state.questions} Card={QuestionCard as unknown as ComponentType<Question>} />
     </>);
   }
 }
+
+function mergeSort  (arr: Array<Question>): Array<Question>{
+    const half = arr.length / 2;
+  
+    // the base case is array length <=1
+    if (arr.length <= 1) {
+      return arr;
+    }
+  
+    const left = arr.splice(0, half); // the first half of the array
+    const right = arr;
+    return merge(mergeSort(left), mergeSort(right));
+  }
+
+  function merge(left: Array<Question> , right: Array<Question>): Array<Question> {
+    let sortedArr: Array<Question> = []; // the sorted elements will go here
+  
+    while (left.length && right.length) {
+      // insert the smallest element to the sortedArr
+      if (left[0].position! < right[0].position!) {
+        sortedArr.push(left.shift() as Question);
+      } else {
+        sortedArr.push(right.shift() as Question);
+      }
+    }
+     // use spread operator and create a new array, combining the three arrays
+    return [...sortedArr, ...left, ...right];
+}
+    

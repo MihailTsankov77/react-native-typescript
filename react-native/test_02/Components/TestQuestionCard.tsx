@@ -1,6 +1,6 @@
 
 import React, { Component, useState } from "react";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import Answer from "../modules/Answer";
 import Question from "../modules/Question";
 import Card from "./.newFolder/CustomComponents/CustomCard";
@@ -58,6 +58,7 @@ function MyCheckbox({ checked, onChange, answer, itemId }: MyCheckboxProps) {
         {checked && <Ionicons name="checkmark" size={24} color="white" />}
       </Pressable>
       <Text> {answer.text}</Text>
+      <Image source={{uri: answer.picture, width:30, height:30}} />
     </View>);
   }
 

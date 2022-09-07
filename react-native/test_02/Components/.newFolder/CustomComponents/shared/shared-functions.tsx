@@ -29,6 +29,35 @@ export const notImplemeneted: onChangeFunction = (text: string) => {
     throw `Not parse onChange Function in ${text}`;
 }
 
+export function mergeSort <T> (arr: Array<T>): Array<T>{
+    const half = arr.length / 2;
+  
+    // the base case is array length <=1
+    if (arr.length <= 1) {
+      return arr;
+    }
+  
+    const left = arr.splice(0, half); // the first half of the array
+    const right = arr;
+    return merge<T>(mergeSort(left), mergeSort(right));
+  }
+
+  function merge<T>(left: Array<T> , right: Array<T>): Array<T> {
+    let sortedArr: Array<T> = []; // the sorted elements will go here
+  
+    while (left.length && right.length) {
+      // insert the smallest element to the sortedArr
+      if (left[0] < right[0]) {
+        sortedArr.push(left.shift() as T);
+      } else {
+        sortedArr.push(right.shift() as T);
+      }
+    }
+    
+    // use spread operator and create a new array, combining the three arrays
+    return [...sortedArr, ...left, ...right];
+  }
+
 //****************    SCTICKY NAVBAR     ***************/
 
 // handleScroll = (event: { nativeEvent: { contentOffset: { y: number; }; }; }) => {   

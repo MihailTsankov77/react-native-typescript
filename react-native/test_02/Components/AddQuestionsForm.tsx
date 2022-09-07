@@ -38,8 +38,11 @@ for(let i = 1; i<= 10; i++){
 }  
 
 const validators: validatorsType<Fields> = {
+    // type: [Validators.required()],
     text: [Validators.required(), Validators.len(10, 500)],
-    points: [Validators.required()],
+    points: [Validators.required(), Validators.isNumber()],
+
+
     
 }
  
@@ -89,7 +92,7 @@ class AddQuestionsForm extends Component<AddQuestionsFormProps, AddQuestionsForm
             return new Answer(
                 index,
                 parseInt(AnswScorePr[index]),
-                this.props.edited?.answers[index].created || new Date().toDateString(),
+                this.props.edited?.answers[index]?.created || new Date().toDateString(),
                 new Date().toDateString(),
                 AnswText[index],
                 picture
@@ -128,7 +131,8 @@ class AddQuestionsForm extends Component<AddQuestionsFormProps, AddQuestionsForm
 
     handleAddedChange = (target: "AnswText" | "AnswPicture" | "AnswScorePr",index: number) => {
         return (text: string) =>{
-            const updatedAddedField = this.state[target].map((field, id) => id === index? text : field)
+            
+            const updatedAddedField = this.state[target].map((field, id) => id === index? text : field);
 
             this.setState({[target]: updatedAddedField});
         }

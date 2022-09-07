@@ -36,7 +36,7 @@ export default class StartTest extends Component<StartTestProps, StartTestState>
 
       const quest = this.props.questions.filter(q => q.id === questionId)[0];
 
-      if( TypeAnswers[quest.type] === TypeAnswers.MultipleChoise){
+      if( TypeAnswers[quest.type] as unknown as TypeAnswers === TypeAnswers.MultipleChoise){
 
         const index = existing[0].answers.indexOf(answer);
         if(index === -1){
@@ -60,11 +60,10 @@ export default class StartTest extends Component<StartTestProps, StartTestState>
     }
   }
   handleSubmit = () =>{
+    const {selected} = this.state;
+    const {questions} = this.props;
     let score = 0;
-    this.props.questions.map(q=> score+= q.points)
-    this.state.selected.map(sel =>{
-      sel.answers.map(ans => score+=ans.scorePr);
-    });
+    questions.map(q=> score += q.points* selected.filter(sel => sel.id === q.id)[0].answers.reduce((prev, newV)=> prev+newV.scorePr, 0)/100)
 
     this.setState({score: score});
   }
@@ -72,15 +71,16 @@ export default class StartTest extends Component<StartTestProps, StartTestState>
   render() {
     return (<>
     {!this.state.score?
-      <List items={this.props.questions} options={{selectedAnswers: this.state.selected, onSelectAnswer: this.handleSelected }} Card={TestQuestionCard  as unknown as ComponentType<Question>} />
+      <>
+        <List items={this.props.questions} options={{selectedAnswers: this.state.selected, onSelectAnswer: this.handleSelected }} Card={TestQuestionCard  as unknown as ComponentType<Question>} />
+        <Btn event={() => this.handleSubmit()} value="Complete Test"/>
+      </>
       :
       <>
-        <Text>{this.state.score}</Text>
-        <List items={this.props.questions} options={{selectedAnswers: this.state.selected, onSelectAnswer: this.handleSelected }} Card={TestReadyQuestionCard  as unknown as ComponentType<Question>} />
+        <Text style={{padding:5, fontSize:30, alignSelf:'center'}}> Your Score: {this.state.score}/{this.props.questions.reduce((prev, next)=> prev + next.points, 0)}</Text>
+        <List items={this.props.questions} options={{selectedAnswers: this.state.selected, onSelectAnswer: this.handleSelected}} Card={TestReadyQuestionCard  as unknown as ComponentType<Question>} />
       </>
       }
-      
-      <Btn event={() => this.handleSubmit()} value="Complete Test"/>
     </>)
   }
 }

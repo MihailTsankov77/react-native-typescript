@@ -46,6 +46,13 @@ export class Validators {
         }
         return false;
     }
+    static isNumber: ValidatorFactory = () => (value: string, field: string) => {
+        const hasNumber = new RegExp("^[0-9]");
+        if(!hasNumber.test(value)) {
+            return `The field '${field}' should have only numbers`;
+        }
+        return false;
+    }
 
     static isPass: ValidatorFactory = () => (value: string, field: string) => {
        const hasNumber = new RegExp("[0-9]");
