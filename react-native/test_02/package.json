@@ -1,0 +1,35 @@
+{
+  "name": "react-node",
+  "version": "1.0.0",
+  "main": "node_modules/expo/AppEntry.js",
+  "scripts": {
+    "api": "json-server db.json --routes routes.json --host 10.16.6.28 --port 4000",
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web"
+  },
+  "dependencies": {
+    "@react-native-picker/picker": "^2.4.4",
+    "expo": "~46.0.8",
+    "expo-image-manipulator": "~10.4.0",
+    "expo-image-picker": "~13.3.1",
+    "expo-status-bar": "~1.4.0",
+    "json-server": "^0.17.0",
+    "react": "18.0.0",
+    "react-dom": "18.0.0",
+    "react-native": "0.69.4",
+    "react-native-select-dropdown": "^2.0.4",
+    "react-native-web": "~0.18.7"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.9",
+    "@types/react": "~18.0.14",
+    "@types/react-native": "~0.69.1",
+    "typescript": "~4.3.5"
+  },
+  "private": true,
+  "author": "Mihail Tsankov",
+  "license": "Apache-2.0",
+  "description": ""
+}

@@ -1,0 +1,60 @@
+{
+  "Questions": [
+    {
+      "type": "MultipleChoise",
+      "text": "BLoblbolbb",
+      "picture": "",
+      "points": 10,
+      "answers": [
+        {
+          "id": 0,
+          "scorePr": -10,
+          "created": "Wed Sep 07 2022",
+          "modified": "Wed Sep 07 2022",
+          "text": "1",
+          "picture": ""
+        },
+        {
+          "id": 1,
+          "scorePr": 10,
+          "created": "Wed Sep 07 2022",
+          "modified": "Wed Sep 07 2022",
+          "text": "2",
+          "picture": ""
+        }
+      ],
+      "created": "Wed Sep 07 2022",
+      "modified": "Wed Sep 07 2022",
+      "id": 1,
+      "position": 0
+    },
+    {
+      "id": 2,
+      "type": "MultipleResponse",
+      "text": "BlobBlobBLob",
+      "picture": "",
+      "points": 100,
+      "answers": [
+        {
+          "id": 0,
+          "scorePr": 10,
+          "created": "Wed Sep 07 2022",
+          "modified": "Wed Sep 07 2022",
+          "text": "1",
+          "picture": ""
+        },
+        {
+          "id": 1,
+          "scorePr": -10,
+          "created": "Wed Sep 07 2022",
+          "modified": "Wed Sep 07 2022",
+          "text": "2",
+          "picture": ""
+        }
+      ],
+      "position": 1,
+      "created": "Wed Sep 07 2022",
+      "modified": "Wed Sep 07 2022"
+    }
+  ]
+}
