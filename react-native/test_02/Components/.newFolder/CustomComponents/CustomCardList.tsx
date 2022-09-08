@@ -14,7 +14,7 @@ interface ListProps<T> {
 
 
  function List<T extends Identifiable<number>> ({items, Card, ...rest}:ListProps<T>) {
-    
+        
     const elements = items.map(item=>{
         return <Card key={item.id} item={item} {...(rest as unknown as T)} />
     });

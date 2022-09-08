@@ -21,6 +21,9 @@ export default class AddQuestionView extends Component<AddQuestionViewProps, Add
     state: Readonly<AddQuestionViewState> ={
         questions: [],
     }
+    componentDidMount(): void {
+      this.setState({questions: this.sortQuestions()});
+    }
     componentDidUpdate(prevProps: Readonly<AddQuestionViewProps>): void {
         if(this.props === prevProps) return;
 
@@ -32,7 +35,7 @@ export default class AddQuestionView extends Component<AddQuestionViewProps, Add
         const existingQuestions: Question[] = questions.filter(quest => quest.position!==undefined);
         const undefQuestions = questions.filter(quest => quest.position==undefined);
 
-        const sortedQuestions = mergeSort(existingQuestions);
+        const sortedQuestions = mergeSort(JSON.parse(JSON.stringify(existingQuestions)));
         
         undefQuestions.forEach(ques =>{
             ques.position = sortedQuestions[sortedQuestions.length-1].position!+1;
@@ -69,7 +72,7 @@ export default class AddQuestionView extends Component<AddQuestionViewProps, Add
   }
 }
 
-function mergeSort  (arr: Array<Question>): Array<Question>{
+export function mergeSort  (arr: Array<Question>): Array<Question>{
     const half = arr.length / 2;
   
     // the base case is array length <=1

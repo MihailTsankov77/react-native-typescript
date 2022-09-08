@@ -7,6 +7,7 @@ import Card from "./.newFolder/CustomComponents/CustomCard";
 
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { Selected } from "./StartTest";
+import DropdownQuestion from "./DropdownQuestion";
 
 interface TestQuestionCardProps {
     item: Question;
@@ -18,23 +19,25 @@ interface TestQuestionCardProps {
 
 class TestQuestionCard extends Component<TestQuestionCardProps, {}> {
 
-    render() {
+    render() {      
         const {item, options} = this.props;
         const {selectedAnswers, onSelectAnswer} = options;
 
         const SelectedAnsw = selectedAnswers.filter(q => q.id === item.id)[0]?.answers || [];
-        
-        
-        return (
+        return ( <>
+          {item.type as unknown as string === "DragAndDrop"? 
+              <DropdownQuestion {...this.props} />:
+
             <Card len='r1' image={{uri: item.picture}} title={"Question"}>
                 <Text>{item.text}</Text>
                 <Text>Answers:</Text>
                 {item.answers?.map((answer, index) =>{
-                    return <MyCheckbox  checked={SelectedAnsw.includes(answer)} onChange={onSelectAnswer} itemId={item.id!} key={index} answer={answer} />
+                    return <MyCheckbox  checked={SelectedAnsw.some(ans => ans.id=== answer.id)} onChange={onSelectAnswer} itemId={item.id!} key={index} answer={answer} />
                 })}
-                
+              
             </Card>
-        );
+            } 
+        </>);
 
     }
 }

@@ -1,5 +1,5 @@
 import React, { Component, ComponentType } from "react";
-import { ScrollView } from "react-native";
+import { Button, SafeAreaView, ScrollView, View } from "react-native";
 import AddMovieForm from "./Components/AddQuestionsForm";
 import List from "./Components/.newFolder/CustomComponents/CustomCardList";
 import Navbar from "./Components/.newFolder/CustomComponents/CustomNavbar";
@@ -37,18 +37,16 @@ class App extends Component<{},AppState> {
   }
  
 
-async componentDidMount() {
-  const allQuestions = await QuestionRepo.findAll();
-  this.setState({questions: allQuestions});
-}
-
-  
-
+  async componentDidMount() {
+    const allQuestions = await QuestionRepo.findAll();
+    this.setState({questions: allQuestions});
+  }
 
   handleCreateQuestions = async (question: Question) =>{
     if(!this.state.edited){
       const created = await QuestionRepo.create(question);
       this.setState(({questions}) => ({questions: questions.concat(created)}));
+      console.log(this.state);
     }else{
        this.handleUpdate(question);
     }
@@ -56,32 +54,20 @@ async componentDidMount() {
 
   handleUpdate = async (question: Question) =>{
     const updated = await QuestionRepo.update(question);
-    this.setState(({questions}) => ({questions: questions.map((qu) => qu.id === updated.id? updated: qu)}));
-    this.setState({edited: undefined}); 
+    this.setState(({questions}) => ({questions: questions.map((qu) => qu.id === updated.id? updated: qu), edited: undefined}));
   }
 
   handleDeleteQuestion = async (question: Question) =>{
       await QuestionRepo.delete(question.id!);
       this.setState(({questions}) => ({questions: questions.filter((qu) => qu.id!== question.id)}));
-    
   }
   
   handleEditQuestion =  (question: Question)=>{
     this.setState({edited: question});
   }
-  
 
-//   handleScroll = (event: { nativeEvent: { contentOffset: { y: number; }; }; }) => {   
-//     if(event.nativeEvent.contentOffset.y >= 200){
-//       this.setState({isScrolled: true});
-//     }
-//     if(event.nativeEvent.contentOffset.y <= 50){
-//       this.setState({isScrolled: false});
-//     } 
-// }
  
   handleSwitchView(){
-   
     switch(this.state.views){
       case Views.HomePage:
         return <AddQuestionView onCreate={this.handleCreateQuestions} onDelete={this.handleDeleteQuestion} onEdit={this.handleEditQuestion} onPositionMove={this.handleUpdate} edited={this.state.edited} questions={this.state.questions}/>
@@ -92,17 +78,17 @@ async componentDidMount() {
   }
   
   render(): React.ReactNode {
-    return (
-      <>
-      <Navbar title="Mudele Test" >
+
+    return (<>
+      <View>
+       <Navbar title="Mudele Test" >
           <Btn value="Create Questions" event={() => this.setState({views: Views.HomePage})} bgColor='gray'/>
           <Btn value="Start Test" event={() => this.setState({views: Views.StartTest})} bgColor='gray'/>
-          
       </Navbar>
-      <ScrollView  style={{height: 0}}>
-
-      {this.handleSwitchView()}
-      </ScrollView>
+      <ScrollView  style={{height: "fit-content"}}>
+        {this.handleSwitchView()}
+      </ScrollView> 
+      </View>
       </>
     );
   }

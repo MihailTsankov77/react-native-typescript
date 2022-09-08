@@ -3,7 +3,7 @@ import Answer from "./Answer";
 export enum TypeAnswers{
     MultipleChoise,
     MultipleResponse,
-    DaragAndDrop
+    DragAndDrop
 }
 
 
