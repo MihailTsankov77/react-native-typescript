@@ -35,7 +35,7 @@ export default class AddQuestionView extends Component<AddQuestionViewProps, Add
         const existingQuestions: Question[] = questions.filter(quest => quest.position!==undefined);
         const undefQuestions = questions.filter(quest => quest.position==undefined);
 
-        const sortedQuestions = mergeSort(JSON.parse(JSON.stringify(existingQuestions)));
+        const sortedQuestions = existingQuestions.sort((a, b)=> a.position! - b.position!) 
         
         undefQuestions.forEach(ques =>{
             ques.position = sortedQuestions[sortedQuestions.length-1].position!+1;
@@ -71,32 +71,3 @@ export default class AddQuestionView extends Component<AddQuestionViewProps, Add
     </>);
   }
 }
-
-export function mergeSort  (arr: Array<Question>): Array<Question>{
-    const half = arr.length / 2;
-  
-    // the base case is array length <=1
-    if (arr.length <= 1) {
-      return arr;
-    }
-  
-    const left = arr.splice(0, half); // the first half of the array
-    const right = arr;
-    return merge(mergeSort(left), mergeSort(right));
-  }
-
-  function merge(left: Array<Question> , right: Array<Question>): Array<Question> {
-    let sortedArr: Array<Question> = []; // the sorted elements will go here
-  
-    while (left.length && right.length) {
-      // insert the smallest element to the sortedArr
-      if (left[0].position! < right[0].position!) {
-        sortedArr.push(left.shift() as Question);
-      } else {
-        sortedArr.push(right.shift() as Question);
-      }
-    }
-     // use spread operator and create a new array, combining the three arrays
-    return [...sortedArr, ...left, ...right];
-}
-    

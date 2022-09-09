@@ -7,7 +7,6 @@ import TestQuestionCard from './TestQuestionCard';
 import Btn from "./.newFolder/CustomComponents/CustomButton";
 import TestReadyQuestionCard from './TestReadyQuestionCard';
 import { Text } from 'react-native';
-import { mergeSort } from './AddQuestionView';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import QuestionCard from './QuestionCard';
 
@@ -106,13 +105,13 @@ export default class StartTest extends Component<StartTestProps, StartTestState>
     return (<>
     {!this.state.score?
       <>
-        <List items={mergeSort(JSON.parse(JSON.stringify(this.props.questions)))} options={{selectedAnswers: this.state.selected, onSelectAnswer: this.handleSelected }} Card={TestQuestionCard  as unknown as ComponentType<Question>} />
+        <List items={this.props.questions.sort((a, b)=> a.position! - b.position!)} options={{selectedAnswers: this.state.selected, onSelectAnswer: this.handleSelected }} Card={TestQuestionCard  as unknown as ComponentType<Question>} />
         <Btn event={() => this.handleSubmit()} value="Complete Test"/>
       </>
       :
       <>
         <Text style={{padding:5, fontSize:30, alignSelf:'center'}}> Your Score: {this.state.score}/{this.props.questions.reduce((prev, next)=> prev + next.points, 0)}</Text>
-        <List items={mergeSort(JSON.parse(JSON.stringify(this.props.questions)))} options={{selectedAnswers: this.state.selected, onSelectAnswer: this.handleSelected}} Card={TestReadyQuestionCard  as unknown as ComponentType<Question>} />
+        <List items={this.props.questions.sort((a, b)=> a.position! - b.position!)} options={{selectedAnswers: this.state.selected, onSelectAnswer: this.handleSelected}} Card={TestReadyQuestionCard  as unknown as ComponentType<Question>} />
       </>
       }
     </>)

@@ -3,8 +3,10 @@ import React, { Component, RefObject, useState } from "react";
 import { Dimensions, Image, LayoutChangeEvent, StyleSheet, Text, View } from "react-native";
 import Answer from "../modules/Answer";
 import Question, { TypeAnswers } from "../modules/Question";
+import DragAndDrop from "./.newFolder/CustomComponents/CustomElements/DragAndDrop";
+import DropArea from "./.newFolder/CustomComponents/CustomElements/DropArea";
+import Draggable from "./.newFolder/CustomComponents/CustomElements/Draggable";
 
-import Draggable, { DropAreaProps } from "./Draggable";
 import { Selected } from "./StartTest";
 
 interface DropdownQuestionProps {
@@ -16,45 +18,14 @@ interface DropdownQuestionProps {
 }
 
 interface DropdownQuestionState {
-    dropAreasPositions: DropAreaProps[];
-    dropAreaRefs: React.Ref<View>[]
 }
 
 class DropdownQuestion extends Component<DropdownQuestionProps, DropdownQuestionState> {
     
     
     
-    constructor(props: DropdownQuestionProps){
-        super(props);
-        const refs: React.Ref<View>[] =[];
-        for (let i = 0; i < this.props.item.answers.length; i++) {
-            refs.push(React.createRef<View>());
-        }
-        this.state ={
-            dropAreasPositions: [],
-            dropAreaRefs: refs 
-        }
-    }
+
     
-    
-
-    handleDropAreasLayout = (id: number, index: number) => () =>{
-        if(this.state.dropAreaRefs[id]===null) return;
-
-        const ref = this.state.dropAreaRefs[id] as unknown as RefObject<View>;
-        (ref).current?.measure((fx, fy, width, height, px, py) => 
-        this.setState({dropAreasPositions: 
-            this.state.dropAreasPositions.concat({id: index,
-                        position:{px: px ,
-                        py: py ,
-                        width: width,
-                        height: height}})
-        }));
-        
-    }
-    handleOnFinish  =() =>{
-
-    }
 
     render() {
 
@@ -67,14 +38,13 @@ class DropdownQuestion extends Component<DropdownQuestionProps, DropdownQuestion
     return (
         <View style={styles.container} >
             <Text style={styles.question}>{item.text}</Text>
+            <DragAndDrop>
             <View  style={styles.row}>
                 {item.answers.map((ans, id) => {
                 const index = Math.round(Math.random()*(texts.length-1));
                 const text = texts.splice(index, 1)[0];
                 return (
-                    <View ref={this.state.dropAreaRefs[id]} key={ans.id} onLayout={this.handleDropAreasLayout(id, text.id)} style={styles.dropArea}>
-                        <Text>{text.text}</Text>
-                    </View>
+                    <DropArea key={id} id={id.toString()} title={text.text} />
                 );})} 
             </View>
             <View style={styles.row}  >
@@ -82,10 +52,11 @@ class DropdownQuestion extends Component<DropdownQuestionProps, DropdownQuestion
                     const index  = Math.round(Math.random()*(pictures.length-1));
                     const picture = pictures.splice(index, 1)[0];
                 return (
-                    <Draggable key={ans.id} dropAreas={this.state.dropAreasPositions}  onFinish={(id: number)=> {return}}
-                        itemView={<Image source={{uri: picture.uri, width:100, height:100}} />}/>
+                    <Draggable key={ans.id}  dropAreasIDs={item.answers.map((a, id) => id.toString())}
+                        item={picture} itemRender={picture => <Image source={{uri: picture.uri, width:100, height:100}} />}/>
                 );})}
             </View>
+            </DragAndDrop>
         </View>
      );
     }
@@ -117,17 +88,7 @@ const styles = StyleSheet.create({
         flexWrap: 'wrap',
         justifyContent: 'space-between'
     },
-    dropArea: {
-        flexDirection: 'column',
-        flexWrap: 'nowrap',
-        borderWidth: 3,  
-        borderColor: "#E0E0E1",
-        height: 150,
-        width: 150,
-        padding: 10,
-        alignItems: 'center',
-        alignContent: 'center',
-    },
+   
 });
 
 export default DropdownQuestion;
