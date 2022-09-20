@@ -1,0 +1,103 @@
+
+.TodoItem{
+    display: flex;
+    justify-content: space-between;
+    padding: 5px;
+    width: 90%;
+    border: 1px solid rgba(182, 22, 179, 0.3);
+    background-image: linear-gradient(to bottom right, rgba(185, 185,185, 0.4), rgba(182, 22, 179, 0.2));
+}
+
+.TodoItem:hover{
+    
+    width: 92%;
+    background-image: linear-gradient(to bottom right, rgba(185, 185,185, 0.4), rgba(182, 22, 179, 0.5));
+}
+
+.TodoItem-id{
+    padding-right: 10px;
+}
+.TodoItem-right{
+    display: flex;
+    flex-flow: row nowrap;
+    gap: 10px;
+    width: fit-content;
+    align-items: center;
+    color: lightgreen
+}
+
+.TodoItem-buttons{
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 5px;
+}
+
+.TodoItem-button{
+  cursor: pointer;
+  color: lightgreen;
+}
+
+.TodoItem-button:hover{
+   
+    border-radius: 100%;
+    text-shadow:
+    0 0 5px #fff,
+    0 0 10px #fff,
+    0 0 5px #0fa,
+    0 0 10px #0fa,
+    0 0 12px #0fa,
+    0 0 14px #0fa,
+    0 0 16px #0fa;
+  }
+
+  .danger{
+    color: lightcoral;
+  }
+
+  .danger:hover{
+   
+    border-radius: 100%;
+    text-shadow:
+    0 0 5px #fff,
+    0 0 10px #fff,
+    0 0 5px rgb(248, 131, 131),
+    0 0 10px rgb(248, 131, 131),
+    0 0 12px rgb(248, 131, 131),
+    0 0 14px rgb(248, 131, 131),
+    0 0 16px rgb(248, 131, 131);
+  }
+
+  .cancel{
+    color: gray;
+  }
+
+  .cancel:hover{
+   
+    border-radius: 100%;
+    text-shadow:
+    0 0 5px #fff,
+    0 0 10px #fff,
+    0 0 5px rgb(202, 197, 197),
+    0 0 10px rgb(202, 197, 197),
+    0 0 12px rgb(202, 197, 197),
+    0 0 14px rgb(202, 197, 197),
+    0 0 16px rgb(202, 197, 197);
+  }
+
+
+  .edit{
+    color: cornflowerblue;
+  }
+
+  .edit:hover{
+   
+    border-radius: 100%;
+    text-shadow:
+    0 0 5px #fff,
+    0 0 10px #fff,
+    0 0 5px rgba(122, 160, 231, 0.663),
+    0 0 10px rgba(122, 160, 231, 0.663),
+    0 0 12px rgba(122, 160, 231, 0.663),
+    0 0 14px rgba(122, 160, 231, 0.663),
+    0 0 16px rgba(122, 160, 231, 0.663);
+  }
